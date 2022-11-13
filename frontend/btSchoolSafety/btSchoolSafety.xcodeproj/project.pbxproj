@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */; };
-		5AFBB55A2920687900CCEA30 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5592920687900CCEA30 /* ContentView.swift */; };
+		5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5592920687900CCEA30 /* HomeView.swift */; };
 		5AFBB55C2920687A00CCEA30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AFBB55B2920687A00CCEA30 /* Assets.xcassets */; };
 		5AFBB55F2920687A00CCEA30 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AFBB55E2920687A00CCEA30 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		5AFBB5542920687900CCEA30 /* btSchoolSafety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btSchoolSafety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = btSchoolSafetyApp.swift; sourceTree = "<group>"; };
-		5AFBB5592920687900CCEA30 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5AFBB5592920687900CCEA30 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		5AFBB55B2920687A00CCEA30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5AFBB55E2920687A00CCEA30 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */,
-				5AFBB5592920687900CCEA30 /* ContentView.swift */,
+				5AFBB5592920687900CCEA30 /* HomeView.swift */,
 				5AFBB55B2920687A00CCEA30 /* Assets.xcassets */,
 				5AFBB55D2920687A00CCEA30 /* Preview Content */,
 			);
@@ -137,7 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AFBB55A2920687900CCEA30 /* ContentView.swift in Sources */,
+				5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */,
 				5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
