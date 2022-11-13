@@ -1,3 +1,6 @@
 .DS_Store
 xcuserdata/
 **/Config.xcconfig
+**.env*
+**venv/
+**__pycache__/
