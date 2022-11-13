@@ -6,21 +6,23 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct ContentView: View {
     var body: some View {
         VStack {
-//            Image(systemName: "globe")
-//                .imageScale(.large)
-//                .foregroundColor(.accentColor)
-//            Text("Hello, world!")
-            Button("Panic Button") { print("Panic Button tapped!")
+//            Text(CLLocationManager.locationServicesEnabled() ? "hello":"bye")
+            Button("Panic Button") { print("Panic Button tapped!🔴")
             }.padding()
-            .tint(.red)
-            .controlSize(.large)
-            .buttonStyle(.borderedProminent)
+                .tint(.red)
+                .controlSize(.large)
+                .buttonStyle(.borderedProminent)
+            Text("hold the panic button for 3 seconds to activate")
+                .padding([.leading, .trailing], 50)
+                .multilineTextAlignment(.center)
         }
         .padding()
+        
         
     }
 }
