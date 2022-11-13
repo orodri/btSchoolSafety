@@ -10,12 +10,18 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+//            Image(systemName: "globe")
+//                .imageScale(.large)
+//                .foregroundColor(.accentColor)
+//            Text("Hello, world!")
+            Button("Panic Button") { print("Panic Button tapped!")
+            }.padding()
+            .tint(.red)
+            .controlSize(.large)
+            .buttonStyle(.borderedProminent)
         }
         .padding()
+        
     }
 }
 
