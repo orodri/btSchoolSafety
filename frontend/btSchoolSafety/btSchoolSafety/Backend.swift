@@ -47,3 +47,37 @@ func postPanic(_ panic: PanicType) async {
         print("postPanic: NETWORKING ERROR")
     }
 }
+
+func postRegister() async {
+    guard let serverUrl = Bundle.main.object(forInfoDictionaryKey: serverUrlKey) as? String,
+          let serverUrl = URL(string: serverUrl.replacingOccurrences(of: "\\", with: "")) else {
+        fatalError("\(serverUrlKey) not set")
+    }
+    
+    let url = serverUrl.appendingPathComponent("/register")
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    
+    do {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let jsonObj = try? JSONSerialization.jsonObject(with: data) as? [String:Any] else {
+            print("postRegister: failed JSON deserialization")
+            return
+        }
+        guard let assignedIdentifier = jsonObj["anon_identifier"] as? String else {
+            print("postRegister: failed to retrieve anon_identifier")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            System.shared.anonIdentifier = assignedIdentifier
+        }
+       
+        
+        print("postRegister: \(response)")
+    } catch {
+        print("postRegister: NETWORKING ERROR")
+    }
+}

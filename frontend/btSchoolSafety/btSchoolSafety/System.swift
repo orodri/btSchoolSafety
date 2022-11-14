@@ -10,6 +10,7 @@ import Foundation
 class System: ObservableObject {
     
     @Published var isWaitingForActivation = false
+    @Published var anonIdentifier: String?
     
     static let shared = System()
     

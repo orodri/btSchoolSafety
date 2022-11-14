@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF63F492922D45A006A1485 /* ActiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF63F482922D45A006A1485 /* ActiveView.swift */; };
 		5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */; };
 		5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5592920687900CCEA30 /* HomeView.swift */; };
 		5AFBB55C2920687A00CCEA30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AFBB55B2920687A00CCEA30 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		5AF63F472921F968006A1485 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		5AF63F482922D45A006A1485 /* ActiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveView.swift; sourceTree = "<group>"; };
 		5AFBB5542920687900CCEA30 /* btSchoolSafety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btSchoolSafety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = btSchoolSafetyApp.swift; sourceTree = "<group>"; };
 		5AFBB5592920687900CCEA30 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				5AFBB56E2921EB0E00CCEA30 /* System.swift */,
 				5AFBB5672921C80400CCEA30 /* Backend.swift */,
 				5AFBB56C2921E99600CCEA30 /* WaitingView.swift */,
+				5AF63F482922D45A006A1485 /* ActiveView.swift */,
 				5AFBB55B2920687A00CCEA30 /* Assets.xcassets */,
 				5AF63F472921F968006A1485 /* Config.xcconfig */,
 				5AFBB55D2920687A00CCEA30 /* Preview Content */,
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AF63F492922D45A006A1485 /* ActiveView.swift in Sources */,
 				5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */,
 				5AFBB56D2921E99600CCEA30 /* WaitingView.swift in Sources */,
 				5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */,

@@ -14,7 +14,7 @@ struct HomeView: View {
     
     var body: some View {
         if (system.isWaitingForActivation) {
-            WaitingView()
+            WaitingView(isPresenting: false)
         } else {
             VStack {
                 Spacer()

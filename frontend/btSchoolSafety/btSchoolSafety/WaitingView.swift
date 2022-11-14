@@ -9,6 +9,8 @@ import SwiftUI
 
 struct WaitingView: View {
     
+    @State var isPresenting: Bool
+    
     var body: some View {
         VStack {
             Spacer()
@@ -21,13 +23,23 @@ struct WaitingView: View {
               
             }
             Spacer()
+            Button("Activate (for demo)") {
+                isPresenting.toggle()
+            }
+            Spacer()
         }
         .padding()
+        .onAppear() {
+            
+        }
+        .fullScreenCover(isPresented: $isPresenting) {
+            ActiveView(isPresented: $isPresenting)
+        }
     }
 }
 
 struct WaitingView_Preview: PreviewProvider {
     static var previews: some View {
-        WaitingView()
+        WaitingView(isPresenting: false)
     }
 }
