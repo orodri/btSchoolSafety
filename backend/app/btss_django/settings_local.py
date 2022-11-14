@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'school_map.apps.SchoolMapConfig',
     'panic.apps.PanicConfig',
     'django.contrib.admin',
     'django.contrib.auth',

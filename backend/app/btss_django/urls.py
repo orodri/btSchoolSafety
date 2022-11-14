@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from panic import views
+from panic import views as panic_views
+from school_map import views as school_map_views
 
 urlpatterns = [
-    path('panic', views.panic),
+    path('register', school_map_views.register),
+    path('panic', panic_views.panic),
     path('panic/', include('panic.urls')),
     path('admin/', admin.site.urls),
-    path('deactivate', views.deactivate),
+    path('deactivate', panic_views.deactivate),
 ]
