@@ -37,6 +37,14 @@
                 <q-item-section>[[ alert.alertType ]]</q-item-section>
               </q-item>
             </q-list>
+            
+            <h1>Example building</h1>
+            <q-list bordered separator>
+              <q-item clickable v-for="(reporting, index) in roomReportings">
+                <q-item-section overline>[[ reporting.roomName]]</q-item-section>
+                <q-item-section>[[ reporting.numStudentsNearby ]] students nearby</q-item-section>
+              </q-item>
+            </q-list>
           </div>
         </q-page-container>
     
@@ -66,6 +74,14 @@
                 timestamp: "{{ alert.date_received|date:'c' }}",
                 processed: {{ alert.processed|yesno:"true,false" }},
                 alertType: "{{ alert.panic_type }}",
+              },
+              {% endfor %}
+            ],
+            roomReportings: [
+              {% for reporting in room_reportings %}
+              {
+                roomName: "{{ reporting.room_name }}",
+                numStudentsNearby: "{{ reporting.num_students_nearby }}",
               },
               {% endfor %}
             ]
