@@ -13,21 +13,26 @@ struct ContentView: View {
     @ObservedObject var beacons = Beacons.shared
     
     var body: some View {
-        List(beacons.beacons.sorted(by: { Double(truncating: $0.minor) < Double(truncating: $1.minor) }),
-             id: \.label) { beacon in
-            HStack() {
-                Text("\(beacon.major):\(beacon.minor)")
-                    .lineLimit(1)
-                    .allowsTightening(true)
-                Spacer()
-                Text(beacon.accuracy.formatted())
+        VStack {
+            Button("Settings...") {
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
             }
-        }
-        .onAppear {
-            beacons.startRanging()
-        }
-        .onDisappear() {
-            beacons.stopRanging()
+            List(beacons.beacons.sorted(by: { Double(truncating: $0.minor) < Double(truncating: $1.minor) }),
+                 id: \.label) { beacon in
+                HStack() {
+                    Text("\(beacon.major):\(beacon.minor)")
+                        .lineLimit(1)
+                        .allowsTightening(true)
+                    Spacer()
+                    Text(beacon.accuracy.formatted())
+                }
+            }
+            .onAppear {
+                beacons.startRanging()
+            }
+            .onDisappear() {
+                beacons.stopRanging()
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ class Beacons: NSObject, ObservableObject {
     }
     
     func startRanging() {
-        
+
         switch locationManager.authorizationStatus {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()

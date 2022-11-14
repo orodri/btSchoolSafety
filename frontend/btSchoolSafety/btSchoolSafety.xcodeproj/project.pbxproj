@@ -18,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AF63F472921F968006A1485 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		5AFBB5542920687900CCEA30 /* btSchoolSafety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btSchoolSafety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = btSchoolSafetyApp.swift; sourceTree = "<group>"; };
 		5AFBB5592920687900CCEA30 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -25,7 +26,6 @@
 		5AFBB55E2920687A00CCEA30 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5AFBB5662921C78300CCEA30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5AFBB5672921C80400CCEA30 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
-		5AFBB5692921D3EC00CCEA30 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		5AFBB56A2921E5C500CCEA30 /* PanicSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanicSelector.swift; sourceTree = "<group>"; };
 		5AFBB56C2921E99600CCEA30 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
 		5AFBB56E2921EB0E00CCEA30 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 				5AFBB5672921C80400CCEA30 /* Backend.swift */,
 				5AFBB56C2921E99600CCEA30 /* WaitingView.swift */,
 				5AFBB55B2920687A00CCEA30 /* Assets.xcassets */,
-				5AFBB5692921D3EC00CCEA30 /* Config.xcconfig */,
+				5AF63F472921F968006A1485 /* Config.xcconfig */,
 				5AFBB55D2920687A00CCEA30 /* Preview Content */,
 			);
 			path = btSchoolSafety;
@@ -167,7 +167,7 @@
 /* Begin XCBuildConfiguration section */
 		5AFBB5602920687A00CCEA30 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AFBB5692921D3EC00CCEA30 /* Config.xcconfig */;
+			baseConfigurationReference = 5AF63F472921F968006A1485 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
