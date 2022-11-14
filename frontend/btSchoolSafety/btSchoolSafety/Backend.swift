@@ -81,3 +81,44 @@ func postRegister() async {
         print("postRegister: NETWORKING ERROR")
     }
 }
+
+func postNearest() async {
+    print("postNearest:")
+    
+    let beacons = Beacons.shared.beacons
+        .filter { $0.accuracy > 0 }
+        .sorted { Double(truncating: $0.minor) < Double(truncating: $1.minor) }
+    
+    let nearest = beacons.first
+    
+    guard let serverUrl = Bundle.main.object(forInfoDictionaryKey: serverUrlKey) as? String,
+          let serverUrl = URL(string: serverUrl.replacingOccurrences(of: "\\", with: "")) else {
+        fatalError("\(serverUrlKey) not set")
+    }
+    
+    let url = serverUrl.appendingPathComponent("/nearest")
+    
+    var jsonObj: [String:Any] = [:]
+    jsonObj["anonIdentifier"] = System.shared.anonIdentifier
+    jsonObj["nearest"] = nil
+    if let nearest = nearest {
+        jsonObj["nearest"] = Int(truncating: nearest.minor)
+    }
+    
+    guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObj) else {
+        print("postNearest: jsonData serialization error")
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.httpBody = jsonData
+    
+    do {
+        print("postNearest: with \(jsonData.description)")
+        let (_, response) = try await URLSession.shared.data(for: request)
+        print("postNearest: \(response)")
+    } catch {
+        print("postNearest: NETWORKING ERROR")
+    }
+}
