@@ -16,7 +16,9 @@ struct HomeView: View {
             Text("Your app permissions are set correctly. ✅")
             Spacer()
             Button("PANIC") {
-                
+                Task {
+                    await postPanic()
+                }
             }
             .buttonStyle(.bordered)
             .tint(.red)

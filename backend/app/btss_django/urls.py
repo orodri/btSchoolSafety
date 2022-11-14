@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from panic import views
+
 urlpatterns = [
+    path('panic', views.panic),
     path('admin/', admin.site.urls),
 ]
