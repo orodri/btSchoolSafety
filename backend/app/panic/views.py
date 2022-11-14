@@ -6,7 +6,6 @@ from django.utils import timezone
 import json
 from django.template import loader
 from django.views.decorators.http import require_http_methods
-from system.models import System
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -29,11 +28,7 @@ def deactivate(request):
         return HttpResponse(status=404)
     # send push notification to apple's push notification service
     body = json.loads(request.body)
-
-   
-    #print(getattr(obj, "is_tracking_students_locations"))
-
-
+    
 
     response = HttpResponse()
     response.status_code = 201
@@ -48,21 +43,34 @@ def index(request):
         return panic
     panic_alerts = list(map(fix_panic, Panic.objects.all()))
 
+
+    rooms = [
+        {
+            'room_name': 'BB1001',
+            'num_students_nearby': 0,
+            'beacon_minor': 1,
+        },
+        {
+            'room_name': 'BB1002',
+            'num_students_nearby': 0,
+            'beacon_minor': 6,
+        },
+        {
+            'room_name': 'BB1003',
+            'num_students_nearby': 0,
+            'beacon_minor': 11,
+        },
+        {
+            'room_name': 'BB1003',
+            'num_students_nearby': 0,
+            'beacon_minor': 16,
+        },
+    ]
+
+    # TODO: compute rooms from database
+
     context = {
-        'panic_alerts': panic_alerts
-    }
-    return HttpResponse(template.render(context, request))
-
-@require_http_methods(["GET"])
-def deactivate_index(request):
-    template = loader.get_template('panic/deactivate.html')
-
-    def fix_panic(panic: Panic):
-        panic.panic_type = panic.panic_type if panic.panic_type else 'invalid'
-        return panic
-    panic_alerts = list(map(fix_panic, Panic.objects.all()))
-
-    context = {
-        'panic_alerts': panic_alerts
+        'panic_alerts': panic_alerts,
+        'room_reportings': rooms
     }
     return HttpResponse(template.render(context, request))
