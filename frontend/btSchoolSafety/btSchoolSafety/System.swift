@@ -11,6 +11,7 @@ class System: ObservableObject {
     
     @Published var isWaitingForActivation = false
     @Published var anonIdentifier: String?
+    @Published var isActivated = false
     
     static let shared = System()
     

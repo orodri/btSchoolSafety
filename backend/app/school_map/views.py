@@ -39,3 +39,25 @@ def deactivate(request):
     response = HttpResponse()
     response.status_code = 201
     return response
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def nearest(request):
+
+    body = json.loads(request.body)
+
+    anon_identifier = body['anonIdentifier']
+    beacon_minor_closest_to = body['nearest']
+    s = Student.objects.filter(anon_identifier=anon_identifier).all()
+    if len(s) == 0:
+        s = Student()
+        s.anon_identifier = anon_identifier
+    else:
+        s = s[0]
+    s.beacon_minor_closest_to = beacon_minor_closest_to
+    s.save()
+
+
+    response = HttpResponse()
+    response.status_code = 200
+    return response
