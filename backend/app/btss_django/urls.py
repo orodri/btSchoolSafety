@@ -21,4 +21,5 @@ from panic import views
 urlpatterns = [
     path('panic', views.panic),
     path('admin/', admin.site.urls),
+    path('deactivate', views.deactivate),
 ]

@@ -22,5 +22,17 @@ def panic(request):
 
     return response
 
+@csrf_exempt
+def deactivate(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    # send push notification to apple's push notification service
+    body = json.loads(request.body)
+    
+
+    response = HttpResponse()
+    response.status_code = 201
+    return response
+    
 def index(request):
     return HttpResponse("Hello you're panicking")
