@@ -6,12 +6,14 @@ from django.utils import timezone
 import json
 from django.template import loader
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
+
 
 @csrf_exempt
 @require_http_methods(["POST"])
 def panic(request):
     body = json.loads(request.body)
-    
+
     p = Panic()
     p.date_received = timezone.now()
     p.panic_type = body['type'] if body.get('type') else 'omitted'
@@ -22,18 +24,20 @@ def panic(request):
 
     return response
 
+
 @csrf_exempt
 def deactivate(request):
     if request.method != 'POST':
         return HttpResponse(status=404)
     # send push notification to apple's push notification service
     body = json.loads(request.body)
-    
 
     response = HttpResponse()
     response.status_code = 201
     return response
-    
+
+
+@login_required
 @require_http_methods(["GET"])
 def index(request):
     template = loader.get_template('panic/index.html')
@@ -42,7 +46,6 @@ def index(request):
         panic.panic_type = panic.panic_type if panic.panic_type else 'invalid'
         return panic
     panic_alerts = list(map(fix_panic, Panic.objects.all()))
-
 
     rooms = [
         {

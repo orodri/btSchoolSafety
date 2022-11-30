@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>btSchoolSafety</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/quasar@2.10.1/dist/quasar.prod.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div id="q-app">
+      <q-layout view="hHh lpR fFf">
+        <q-header elevated class="bg-primary text-white">
+          <q-toolbar>
+            <q-toolbar-title>btSchoolSafety</q-toolbar-title>
+          </q-toolbar>
+        </q-header>
+        <q-page-container>
+          <q-page
+            class="window-height window-width row justify-center items-center"
+          >
+            <div class="q-gutter-md">
+              <q-form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <q-input
+                  filled
+                  name="username"
+                  label="Username"
+                  v-model="username"
+                  :rules="[ val => val && val.length > 0 || 'This is a required field']"
+                >
+                </q-input>
+
+                <q-input
+                  filled
+                  name="password"
+                  label="Password"
+                  v-model="password"
+                  :type="isPwd ? 'password' : 'text'"
+                  :rules="[ val => val && val.length > 0 || 'This is a required field']"
+                >
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
+
+                <input type="hidden" name="next" value="{{ next }}" />
+
+                <q-btn
+                  class="full-width"
+                  label="Log in"
+                  type="submit"
+                  color="primary"
+                />
+              </q-form>
+
+              {% if form.errors %}
+              <p>Your username and password didn't match. Please try again.</p>
+              {% endif %} {% if next %} {% if user.is_authenticated %}
+              <p>
+                Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.
+              </p>
+              {% else %}
+              <p>Please login to see this page.</p>
+              {% endif %} {% endif %}
+            </div>
+          </q-page>
+        </q-page-container>
+      </q-layout>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.10.1/dist/quasar.umd.prod.js"></script>
+
+    <script>
+      const app = Vue.createApp({
+        delimiters: ["[[", "]]"],
+        data() {
+          return {
+            username: null,
+            password: null,
+            isPwd: true,
+          };
+        },
+        setup() {
+          return {};
+        },
+      });
+
+      app.use(Quasar);
+      app.mount("#q-app");
+    </script>
+  </body>
+</html>

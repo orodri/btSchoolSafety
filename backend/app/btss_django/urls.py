@@ -20,6 +20,7 @@ from panic import views as panic_views
 from school_map import views as school_map_views
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
     path('register', school_map_views.register),
     path('panic', panic_views.panic),
     path('panic/', include('panic.urls')),
