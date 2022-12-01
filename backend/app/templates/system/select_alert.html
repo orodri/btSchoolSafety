@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>btSchoolSafety</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/quasar@2.10.1/dist/quasar.prod.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <div id="q-app">
+      <q-layout view="hHh lpR fFf">
+        <q-header elevated class="bg-primary text-white">
+          <q-toolbar class="q-gutter-sm">
+            <q-toolbar-title> btSchoolSafety </q-toolbar-title>
+            <q-btn flat round dense icon="more_vert">
+              <q-menu>
+                <q-list>
+                  <q-item clickable v-close-popup @click="redirectToLogout">
+                    <q-item-section class="text-no-wrap">
+                      Log out
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </q-toolbar>
+        </q-header>
+
+        <q-page-container>
+          <q-page
+            padding
+            class="column justify-center items-center q-gutter-lg"
+          >
+            <div>
+              <p class="text-h6">Which type of alert to send out?</p>
+            </div>
+            <div class="column q-gutter-sm">
+              <q-btn color="red">Active shooting</q-btn>
+              <q-btn color="orange">Fire</q-btn>
+              <q-btn color="yellow">Other</q-btn>
+            </div>
+            <div>
+              <q-btn flat @click="redirectToPanicAlerts">Cancel</q-btn>
+            </div>
+          </q-page>
+        </q-page-container>
+      </q-layout>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.10.1/dist/quasar.umd.prod.js"></script>
+
+    <script>
+      const app = Vue.createApp({
+        delimiters: ["[[", "]]"],
+        data() {
+          return {};
+        },
+        setup() {
+          return {};
+        },
+        methods: {
+          redirectToPanicAlerts() {
+            window.location.href = "/panic/";
+          },
+        },
+      });
+
+      app.use(Quasar);
+      app.mount("#q-app");
+    </script>
+  </body>
+</html>

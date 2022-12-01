@@ -29,4 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('deactivate', panic_views.deactivate),
     path('nearest', school_map_views.nearest),
+    path('system/', include('system.urls')),
 ]

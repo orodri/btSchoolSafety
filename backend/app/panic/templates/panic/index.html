@@ -21,7 +21,7 @@
           <q-toolbar class="q-gutter-sm">
             <q-toolbar-title> btSchoolSafety </q-toolbar-title>
 
-            <q-btn flat>Activate</q-btn>
+            <q-btn flat @click="redirectToSelectAlert">Activate</q-btn>
             <q-btn flat round dense icon="more_vert">
               <q-menu>
                 <q-list>
@@ -105,6 +105,9 @@
         methods: {
           redirectToLogout() {
             window.location.href = "/accounts/logout"
+          },
+          redirectToSelectAlert() {
+            window.location.href = "/system/select"
           },
           colorFor(alertType) {
             switch (alertType) {
