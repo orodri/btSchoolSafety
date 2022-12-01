@@ -16,3 +16,11 @@ def select_alert(request):
     template = loader.get_template('system/select_alert.html')
 
     return HttpResponse(template.render(None, request))
+
+
+@login_required
+@require_http_methods(["GET"])
+def send_active_shooting(request):
+    template = loader.get_template('system/send_active_shooting.html')
+
+    return HttpResponse(template.render(None, request))

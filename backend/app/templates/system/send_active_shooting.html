@@ -39,19 +39,26 @@
             padding
             class="column justify-center items-center q-gutter-lg"
           >
-            <div>
-              <p class="text-h6">Which type of alert to send out?</p>
-            </div>
-            <div class="column q-gutter-sm">
-              <q-btn color="red" @click="redirectToSendActiveShooting">
-                Active shooting
-              </q-btn>
-              <q-btn color="orange">Fire</q-btn>
-              <q-btn color="yellow">Other</q-btn>
-            </div>
-            <div>
-              <q-btn flat @click="redirectToPanicAlerts">Cancel</q-btn>
-            </div>
+            <q-card flat style="max-width: 25em">
+              <q-card-section>
+                <p class="text-h6">
+                  All student’s devices will have active location monitoring
+                  turned on and be sent the following notification:
+                </p>
+                <p>
+                  "An ACTIVE SHOOTER has been reported at your school. The
+                  btSchoolSafety system has been activated and your phone's
+                  location is automatically sharing your precise location with
+                  first responders. Run! Hide! Fight!"
+                </p>
+              </q-card-section>
+              <q-card-actions vertical align="center">
+                <q-btn class="full-width" color="red">Send</q-btn>
+                <q-btn class="full-width" flat @click="redirectToPanicAlerts">
+                  Cancel
+                </q-btn>
+              </q-card-actions>
+            </q-card>
           </q-page>
         </q-page-container>
       </q-layout>
@@ -76,9 +83,6 @@
           },
           redirectToPanicAlerts() {
             window.location.href = "/panic/";
-          },
-          redirectToSendActiveShooting() {
-            window.location.href = "/system/send-active-shooting";
           },
         },
       });
