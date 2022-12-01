@@ -18,8 +18,10 @@ from django.urls import include, path
 
 from panic import views as panic_views
 from school_map import views as school_map_views
+from system import views as system_views
 
 urlpatterns = [
+    path('', system_views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register', school_map_views.register),
     path('panic', panic_views.panic),
