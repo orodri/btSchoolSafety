@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <!--
-    WARNING! Make sure that you match all Quasar related
-    tags to the same version! (Below it's "@2.10.1")
-  -->
-
   <head>
-    <title>Panic alerts</title>
-
+    <title>btSchoolSafety</title>
     <link
       href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
       rel="stylesheet"
@@ -21,15 +15,14 @@
   </head>
 
   <body>
-    <!-- example of injection point where you write your app template -->
     <div id="q-app">
       <q-layout view="hHh lpR fFf">
         <q-header elevated class="bg-primary text-white">
-          <q-toolbar>
+          <q-toolbar class="q-gutter-sm">
             <q-toolbar-title> btSchoolSafety </q-toolbar-title>
 
             <q-btn flat>Activate</q-btn>
-            <q-btn flat dense icon="more_vert">
+            <q-btn flat round dense icon="more_vert">
               <q-menu>
                 <q-list>
                   <q-item clickable v-close-popup @click="redirectToLogout">
@@ -44,17 +37,24 @@
         </q-header>
 
         <q-page-container>
-          <div class="q-pa-md">
-            <h1>Panic alerts</h1>
+          <q-page padding>
             <q-list bordered separator>
+              <q-item v-if="panicAlerts.length === 0">
+                <q-item-section>No panic alerts</q-item-section>
+              </q-item>
               <q-item clickable v-for="(alert, index) in panicAlerts">
                 <q-item-section overline>[[ alert.timestamp ]]</q-item-section>
-                <q-item-section>[[ alert.alertType ]]</q-item-section>
+                <q-chip :color="colorFor(alert.alertType)" text-color="white">
+                  <span v-text="chipTextFor(alert.alertType)"></span>
+                </q-chip>
               </q-item>
             </q-list>
 
             <h1>Example building</h1>
             <q-list bordered separator>
+              <q-item>
+                <q-item-section>Test</q-item-section>
+              </q-item>
               <q-item clickable v-for="(reporting, index) in roomReportings">
                 <q-item-section overline>
                   [[ reporting.roomName]]
@@ -64,21 +64,16 @@
                 </q-item-section>
               </q-item>
             </q-list>
-          </div>
+          </q-page>
         </q-page-container>
       </q-layout>
     </div>
-
-    <!-- Add the following at the end of your body tag -->
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/quasar@2.10.1/dist/quasar.umd.prod.js"></script>
 
     <script>
-
-
-
       const app = Vue.createApp({
         delimiters: ['[[', ']]'],
         data() {
@@ -110,6 +105,26 @@
         methods: {
           redirectToLogout() {
             window.location.href = "/accounts/logout"
+          },
+          colorFor(alertType) {
+            switch (alertType) {
+              case 'active-shooting':
+                return 'red';
+              case 'fire':
+                return 'orange';
+              default:
+                return 'yellow';
+            }
+          },
+          chipTextFor(alertType) {
+            switch (alertType) {
+              case 'active-shooting':
+                return 'Active shooting';
+              case 'fire':
+                return 'Fire';
+              default:
+                return 'Other';
+            }
           }
         }
       })
