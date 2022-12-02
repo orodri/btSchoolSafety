@@ -19,6 +19,7 @@ from django.urls import include, path
 from panic import views as panic_views
 from school_map import views as school_map_views
 from system import views as system_views
+from api import views as api_views
 
 urlpatterns = [
     path('', system_views.index, name='index'),
@@ -30,4 +31,5 @@ urlpatterns = [
     path('deactivate', panic_views.deactivate),
     path('nearest', school_map_views.nearest),
     path('system/', include('system.urls')),
+    path('api/', include('api.urls')),
 ]

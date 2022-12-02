@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'api.apps.ApiConfig',
     'system.apps.SystemConfig',
     'school_map.apps.SchoolMapConfig',
     'panic.apps.PanicConfig',

@@ -18,7 +18,7 @@ def select_alert(request):
     return HttpResponse(template.render(None, request))
 
 
-@login_required
+# @login_required
 @require_http_methods(["GET"])
 def send_active_shooting(request):
     template = loader.get_template('system/send_active_shooting.html')
