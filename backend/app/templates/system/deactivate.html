@@ -43,24 +43,22 @@
               <q-card-section>
                 <p class="text-h6">
                   All student's devices will have active location monitoring
-                  turned on and be sent the following notification:
+                  turned <b>OFF</b> and be sent the following notification:
                 </p>
                 <p>
-                  "An ACTIVE SHOOTER has been reported at your school. The
-                  btSchoolSafety system has been activated and your phone's
-                  location is automatically sharing your precise location with
-                  first responders. Run! Hide! Fight!"
+                  "ALL CLEAR. There is no longer any threat at your school and
+                  your app is no longer actively monitoring your location."
                 </p>
               </q-card-section>
               <q-card-actions vertical align="center">
                 <q-btn
                   class="full-width"
                   color="red"
-                  @click="sendActiveShootingAlertAndActivateSystem"
+                  @click="sendAllClearAlertAndDeactivateSystem"
                 >
                   Send
                 </q-btn>
-                <q-btn class="full-width" flat @click="redirectToPanicAlerts">
+                <q-btn class="full-width" flat @click="redirectToLiveMap">
                   Cancel
                 </q-btn>
               </q-card-actions>
@@ -87,27 +85,25 @@
           redirectToLogout() {
             window.location.href = "/accounts/logout";
           },
-          redirectToPanicAlerts() {
-            window.location.href = "/panic/";
+          redirectToLiveMap() {
+            window.location.href = "/live-map";
           },
-          sendActiveShootingAlertAndActivateSystem() {
+          sendAllClearAlertAndDeactivateSystem() {
             const csrftoken = document.cookie
               .split("; ")
               .find((cookie) => cookie.startsWith("csrftoken="))
               ?.split("=")[1];
-            const request = new Request("/api/activate", {
+            const request = new Request("/api/deactivate", {
               method: "POST",
               headers: {
                 "X-CSRFToken": csrftoken,
               },
-              body: JSON.stringify({
-                emergencyType: "active-shooting",
-              }),
+              body: JSON.stringify({}),
             });
             fetch(request)
               .then((response) => {
                 console.log(response);
-                window.location.href = "/live-map";
+                window.location.href = "/panic/";
               })
               .catch((error) => {
                 console.error(error);

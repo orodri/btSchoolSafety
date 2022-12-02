@@ -28,8 +28,8 @@ urlpatterns = [
     path('panic', panic_views.panic),
     path('panic/', include('panic.urls')),
     path('admin/', admin.site.urls),
-    path('deactivate', panic_views.deactivate),
     path('nearest', school_map_views.nearest),
     path('system/', include('system.urls')),
     path('api/', include('api.urls')),
+    path('live-map', school_map_views.map_page),
 ]

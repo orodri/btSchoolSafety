@@ -13,7 +13,6 @@ def activate(request):
     body = json.loads(request.body)
 
     system = System.objects.first()
-
     if not system:
         system = System()
 
@@ -28,5 +27,21 @@ def activate(request):
     system.save()
 
     # Send apple push notifications
+
+    return HttpResponse(status=200)
+
+
+@require_http_methods(["POST"])
+def deactivate(request):
+
+    system = System.objects.first()
+    if not system:
+        system = System()
+
+    system.is_tracking_students_locations = False
+    system.emergency_type = None
+    system.save()
+
+    # send push notification to apple's push notification service
 
     return HttpResponse(status=200)
