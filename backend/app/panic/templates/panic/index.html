@@ -50,21 +50,6 @@
                 </q-chip>
               </q-item>
             </q-list>
-
-            <h1>Example building</h1>
-            <q-list bordered separator>
-              <q-item>
-                <q-item-section>Test</q-item-section>
-              </q-item>
-              <q-item clickable v-for="(reporting, index) in roomReportings">
-                <q-item-section overline>
-                  [[ reporting.roomName]]
-                </q-item-section>
-                <q-item-section>
-                  [[ reporting.numStudentsNearby ]] students nearby
-                </q-item-section>
-              </q-item>
-            </q-list>
           </q-page>
         </q-page-container>
       </q-layout>
@@ -88,14 +73,6 @@
               },
               {% endfor %}
             ],
-            roomReportings: [
-              {% for reporting in room_reportings %}
-              {
-                roomName: {{ reporting.room_name|quote }},
-                numStudentsNearby: {{ reporting.num_students_nearby|quote }},
-              },
-              {% endfor %}
-            ]
           }
         },
         setup () {

@@ -62,8 +62,34 @@ def map_page(request):
     if not system:
         system = System()
 
+    rooms = [
+        {
+            'room_name': 'BB1001',
+            'num_students_nearby': 0,
+            'beacon_minor': 1,
+        },
+        {
+            'room_name': 'BB1002',
+            'num_students_nearby': 0,
+            'beacon_minor': 6,
+        },
+        {
+            'room_name': 'BB1003',
+            'num_students_nearby': 0,
+            'beacon_minor': 11,
+        },
+        {
+            'room_name': 'BB1003',
+            'num_students_nearby': 0,
+            'beacon_minor': 16,
+        },
+    ]
+    # TODO: compute rooms from database
+
     context = {
-        'emergency_type': system.emergency_type
+        'emergency_type': system.emergency_type,
+        'building_name': 'Example building',
+        'room_reportings': rooms
     }
 
     template = loader.get_template('school_map/live_map_base.html')
