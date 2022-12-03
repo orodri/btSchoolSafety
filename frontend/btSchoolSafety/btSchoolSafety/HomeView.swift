@@ -15,6 +15,10 @@ struct HomeView: View {
     private let locationManager = CLLocationManager();
     
     var body: some View {
+//        if (true){
+//            MessageView(isPresented: $isPresenting)
+//        }
+//        else
         if (system.isWaitingForActivation) {
             WaitingView(isPresenting: false)
         } else {

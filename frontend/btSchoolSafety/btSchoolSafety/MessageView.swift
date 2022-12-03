@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MessageView: View {
     @Binding var isPresented: Bool
-    
+    @State private var text: String = ""
     var body: some View {
         VStack {
             HStack{
@@ -19,12 +19,28 @@ struct MessageView: View {
                     isPresented.toggle()
                 }
             }
-            Spacer()
-            Button("HELLLO"
-            ){
-                
+            NavigationView {
+//                Form {
+//                    Section {
+//                        Text("Hello, world!")
+//                    }
+//                    Section{
+//                        Text("Hi ")
+//                    }
+//                }
+                List(){}
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("Officer")
             }
+           
             Spacer()
+            TextField(
+                "Type a message ...",
+                text: $text
+            ).onSubmit {
+                print($text)
+                self.text = ""
+            }
            
         }
         .padding()
