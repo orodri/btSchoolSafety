@@ -1,3 +1,4 @@
+{% load btss_extras %}
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
@@ -19,7 +20,16 @@
       <q-layout view="hHh lpR fFf">
         <q-header elevated class="bg-primary text-white">
           <q-toolbar class="q-gutter-sm">
-            <q-toolbar-title> btSchoolSafety </q-toolbar-title>
+            <q-toolbar-title>
+              btSchoolSafety
+              <q-chip
+                v-if="!!emergencyType"
+                color="{{ emergency_type|to_color }}"
+                text-color="white"
+              >
+                {{ emergency_type|to_label }}
+              </q-chip>
+            </q-toolbar-title>
 
             <q-btn flat @click="redirectToDeactivate">Deactivate</q-btn>
             <q-btn flat round dense icon="more_vert">
@@ -52,7 +62,9 @@
       const app = Vue.createApp({
         delimiters: ["[[", "]]"],
         data() {
-          return {};
+          return {
+              emergencyType: {{ emergency_type|quote }},
+          };
         },
         setup() {
           return {};

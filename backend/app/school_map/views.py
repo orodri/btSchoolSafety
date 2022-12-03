@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 import uuid
 
 from school_map.models import Student
+from system.models import System
 
 
 @csrf_exempt
@@ -56,6 +57,15 @@ def nearest(request):
 @login_required
 @require_http_methods(["GET"])
 def map_page(request):
+
+    system = System.objects.first()
+    if not system:
+        system = System()
+
+    context = {
+        'emergency_type': system.emergency_type
+    }
+
     template = loader.get_template('school_map/live_map_base.html')
 
-    return HttpResponse(template.render(None, request))
+    return HttpResponse(template.render(context, request))

@@ -1,3 +1,4 @@
+{% load btss_extras %}
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
@@ -81,17 +82,17 @@
             panicAlerts: [
               {% for alert in panic_alerts %}
               {
-                timestamp: "{{ alert.date_received|date:'c' }}",
+                timestamp: {{ alert.date_received|date:'c'|quote }},
                 processed: {{ alert.processed|yesno:"true,false" }},
-                alertType: "{{ alert.panic_type }}",
+                alertType: {{ alert.panic_type|quote }},
               },
               {% endfor %}
             ],
             roomReportings: [
               {% for reporting in room_reportings %}
               {
-                roomName: "{{ reporting.room_name }}",
-                numStudentsNearby: "{{ reporting.num_students_nearby }}",
+                roomName: {{ reporting.room_name|quote }},
+                numStudentsNearby: {{ reporting.num_students_nearby|quote }},
               },
               {% endfor %}
             ]
