@@ -10,6 +10,7 @@ import SwiftUI
 struct WaitingView: View {
     
     @State var isPresenting: Bool
+    @State var messageView = false
     
     var body: some View {
         VStack {
@@ -20,7 +21,9 @@ struct WaitingView: View {
             Text("Emergency reported! A first responder will be in touch shortly. In the mean time, dial 911.")
             Spacer()
             Button("Contact an official") {
-              
+                messageView.toggle()
+            }.sheet(isPresented: $messageView){
+                MessageView(isPresented:$messageView)
             }
             Spacer()
             Button("Activate (for demo)") {

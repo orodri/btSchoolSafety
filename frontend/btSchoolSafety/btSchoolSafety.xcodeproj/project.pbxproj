@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23D5DE89293BA7AB00DFA853 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5DE88293BA7AB00DFA853 /* MessageView.swift */; };
 		5AF63F492922D45A006A1485 /* ActiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF63F482922D45A006A1485 /* ActiveView.swift */; };
 		5AF63F4B2922E292006A1485 /* Beacons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF63F4A2922E292006A1485 /* Beacons.swift */; };
 		5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23D5DE88293BA7AB00DFA853 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5AF63F472921F968006A1485 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		5AF63F482922D45A006A1485 /* ActiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveView.swift; sourceTree = "<group>"; };
 		5AF63F4A2922E292006A1485 /* Beacons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Beacons.swift; path = ../../../util/btssUtil/btssUtil/Beacons.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				5AFBB56E2921EB0E00CCEA30 /* System.swift */,
 				5AFBB5672921C80400CCEA30 /* Backend.swift */,
 				5AFBB56C2921E99600CCEA30 /* WaitingView.swift */,
+				23D5DE88293BA7AB00DFA853 /* MessageView.swift */,
 				5AF63F482922D45A006A1485 /* ActiveView.swift */,
 				5AF63F4A2922E292006A1485 /* Beacons.swift */,
 				5AFBB55B2920687A00CCEA30 /* Assets.xcassets */,
@@ -162,6 +165,7 @@
 				5AF63F492922D45A006A1485 /* ActiveView.swift in Sources */,
 				5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */,
 				5AFBB56D2921E99600CCEA30 /* WaitingView.swift in Sources */,
+				23D5DE89293BA7AB00DFA853 /* MessageView.swift in Sources */,
 				5AF63F4B2922E292006A1485 /* Beacons.swift in Sources */,
 				5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */,
 				5AFBB56B2921E5C600CCEA30 /* PanicSelector.swift in Sources */,
