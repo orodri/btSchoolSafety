@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AD2869C293BEA9C00F127DF /* LocationTrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD2869B293BEA9C00F127DF /* LocationTrackingService.swift */; };
+		5AD286A0293D04F100F127DF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD2869F293D04F100F127DF /* Config.swift */; };
+		5AD286A2293D0AAA00F127DF /* CLBeacon+btss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */; };
+		5AD286A4293D3E7800F127DF /* LocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD286A3293D3E7800F127DF /* LocationTracker.swift */; };
 		5AF63F492922D45A006A1485 /* ActiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF63F482922D45A006A1485 /* ActiveView.swift */; };
-		5AF63F4B2922E292006A1485 /* Beacons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF63F4A2922E292006A1485 /* Beacons.swift */; };
 		5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */; };
 		5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5592920687900CCEA30 /* HomeView.swift */; };
 		5AFBB55C2920687A00CCEA30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AFBB55B2920687A00CCEA30 /* Assets.xcassets */; };
@@ -20,9 +23,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AD2869B293BEA9C00F127DF /* LocationTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTrackingService.swift; sourceTree = "<group>"; };
+		5AD2869F293D04F100F127DF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLBeacon+btss.swift"; sourceTree = "<group>"; };
+		5AD286A3293D3E7800F127DF /* LocationTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTracker.swift; sourceTree = "<group>"; };
 		5AF63F472921F968006A1485 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		5AF63F482922D45A006A1485 /* ActiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveView.swift; sourceTree = "<group>"; };
-		5AF63F4A2922E292006A1485 /* Beacons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Beacons.swift; path = ../../../util/btssUtil/btssUtil/Beacons.swift; sourceTree = "<group>"; };
 		5AFBB5542920687900CCEA30 /* btSchoolSafety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btSchoolSafety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = btSchoolSafetyApp.swift; sourceTree = "<group>"; };
 		5AFBB5592920687900CCEA30 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -70,10 +76,13 @@
 				5AFBB5592920687900CCEA30 /* HomeView.swift */,
 				5AFBB56A2921E5C500CCEA30 /* PanicSelector.swift */,
 				5AFBB56E2921EB0E00CCEA30 /* System.swift */,
-				5AFBB5672921C80400CCEA30 /* Backend.swift */,
 				5AFBB56C2921E99600CCEA30 /* WaitingView.swift */,
 				5AF63F482922D45A006A1485 /* ActiveView.swift */,
-				5AF63F4A2922E292006A1485 /* Beacons.swift */,
+				5AFBB5672921C80400CCEA30 /* Backend.swift */,
+				5AD286A3293D3E7800F127DF /* LocationTracker.swift */,
+				5AD2869B293BEA9C00F127DF /* LocationTrackingService.swift */,
+				5AD2869F293D04F100F127DF /* Config.swift */,
+				5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */,
 				5AFBB55B2920687A00CCEA30 /* Assets.xcassets */,
 				5AF63F472921F968006A1485 /* Config.xcconfig */,
 				5AFBB55D2920687A00CCEA30 /* Preview Content */,
@@ -162,9 +171,12 @@
 				5AF63F492922D45A006A1485 /* ActiveView.swift in Sources */,
 				5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */,
 				5AFBB56D2921E99600CCEA30 /* WaitingView.swift in Sources */,
-				5AF63F4B2922E292006A1485 /* Beacons.swift in Sources */,
+				5AD2869C293BEA9C00F127DF /* LocationTrackingService.swift in Sources */,
+				5AD286A0293D04F100F127DF /* Config.swift in Sources */,
 				5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */,
 				5AFBB56B2921E5C600CCEA30 /* PanicSelector.swift in Sources */,
+				5AD286A4293D3E7800F127DF /* LocationTracker.swift in Sources */,
+				5AD286A2293D0AAA00F127DF /* CLBeacon+btss.swift in Sources */,
 				5AFBB56F2921EB0E00CCEA30 /* System.swift in Sources */,
 				5AFBB5682921C80400CCEA30 /* Backend.swift in Sources */,
 			);
