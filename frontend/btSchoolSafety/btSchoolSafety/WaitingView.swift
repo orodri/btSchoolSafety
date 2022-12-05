@@ -10,7 +10,7 @@ import SwiftUI
 struct WaitingView: View {
     
     @State var isPresenting: Bool
-    @State var messageView: Bool
+    @State var messageView = false
     
     var body: some View {
         VStack {

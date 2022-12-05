@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ActiveView: View {
     @Binding var isPresented: Bool
-    @State var messageView: Bool
+    @State var messageView = false
     
     var body: some View {
         VStack {
