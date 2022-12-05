@@ -41,3 +41,11 @@ def deactivate_page(request):
     template = loader.get_template('system/deactivate.html')
 
     return HttpResponse(template.render(None, request))
+
+@login_required
+@require_http_methods(["GET"])
+def message_test(request):
+    template = loader.get_template('system/message.html')
+
+    return HttpResponse(template.render(None, request))
+
