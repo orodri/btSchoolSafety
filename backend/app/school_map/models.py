@@ -3,6 +3,13 @@ from django.db import models
 # Create your models here.
 
 
+class BuildingMap(models.Model):
+    upload = models.FileField(upload_to='uploads/')
+    default_camera_height = models.FloatField()
+    max_camera_height = models.FloatField()
+    display_name = models.CharField(max_length=200)
+
+
 class Room(models.Model):
     room_name = models.CharField(max_length=200)
     num_students_nearby = models.IntegerField(default=0)

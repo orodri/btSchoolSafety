@@ -9,7 +9,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 import uuid
 
-from school_map.models import Student
+from school_map.models import BuildingMap, Student
 from system.models import System
 
 
@@ -61,10 +61,16 @@ def map_page(request):
     system = System.objects.first()
     if not system:
         system = System()
+        system.save()
+
+    building_map = BuildingMap.objects.first()
 
     context = {
         'emergency_type': system.emergency_type,
-        'building_name': 'Example building',
+        'building_name': building_map.display_name if building_map else None,
+        'map_file_path': "media/" + building_map.upload.name if building_map else None,
+        'default_camera_height': building_map.default_camera_height if building_map else 0,
+        'max_camera_height': building_map.max_camera_height if building_map else 0,
     }
 
     template = loader.get_template('school_map/live_map_base.html')

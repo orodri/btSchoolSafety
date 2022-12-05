@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from panic import views as panic_views
 from school_map import views as school_map_views
@@ -32,4 +34,4 @@ urlpatterns = [
     path('system/', include('system.urls')),
     path('api/', include('api.urls')),
     path('live-map', school_map_views.map_page),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

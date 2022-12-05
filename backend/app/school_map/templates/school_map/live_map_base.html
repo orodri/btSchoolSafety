@@ -79,8 +79,23 @@
         </q-drawer>
 
         <q-page-container>
-          <q-page padding>
-            <p>Map here</p>
+          <q-page>
+            <div v-if="!!buildingName" id="btss-three-js-container"></div>
+            <div
+              v-else
+              class="window-height window-width row justify-center items-center"
+            >
+              <div class="text-h1">Missing map</div>
+              <div>
+                Please add one at:
+                <a href="admin/school_map/buildingmap/">admin portal</a>
+              </div>
+            </div>
+            <q-page-sticky position="bottom-right" :offset="[18, 18]">
+              <q-btn fab color="accent" @click="resetCamera">
+                Reset camera
+              </q-btn>
+            </q-page-sticky>
           </q-page>
         </q-page-container>
       </q-layout>
@@ -90,7 +105,21 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/quasar@2.10.1/dist/quasar.umd.prod.js"></script>
 
-    <script>
+    <script
+      async
+      src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"
+    ></script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.147.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.147.0/examples/jsm/"
+        }
+      }
+    </script>
+
+    <script type="module">
       const app = Vue.createApp({
         delimiters: ["[[", "]]"],
         data() {
@@ -110,6 +139,11 @@
           },
           redirectToDeactivate() {
             window.location.href = "/system/deactivate";
+          },
+          resetCamera() {
+            controls.reset();
+            camera.position.y = {{ default_camera_height }};
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
           },
         },
         mounted() {
@@ -137,6 +171,8 @@
 
       app.use(Quasar);
       app.mount("#q-app");
+
+      {% include "school_map/live_map_three_js.js" %}
     </script>
   </body>
 </html>
