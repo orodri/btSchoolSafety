@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ActiveView: View {
     @Binding var isPresented: Bool
+    @State var messageView: Bool
     
     var body: some View {
         VStack {
@@ -37,7 +38,9 @@ struct ActiveView: View {
                     .controlSize(.large)
                 Spacer()
                 Button("Contact an official") {
-                    MessageView(isPresented: $isPresented)
+                    messageView.toggle()
+                }.sheet(isPresented: $messageView){
+                    MessageView(isPresented:$messageView)
                 }
                 Spacer()
             }
