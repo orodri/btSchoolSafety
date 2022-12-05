@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'api.apps.ApiConfig',
     'system.apps.SystemConfig',
     'school_map.apps.SchoolMapConfig',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +77,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'btss_django.wsgi.application'
+ASGI_APPLICATION = 'btss_django.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)]
+        }
+    }
+}
 
 
 # Database

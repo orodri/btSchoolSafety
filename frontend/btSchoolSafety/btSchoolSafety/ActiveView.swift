@@ -47,21 +47,8 @@ struct ActiveView: View {
                 
                 System.shared.isActivated = true
                 
-                Beacons.shared.startRanging()
-                
-                Timer.scheduledTimer(withTimeInterval: 5,
-                                     repeats: true) {timer in
-                    // Heartbeat for now, replace with streaming api in future?
-                    
-                    if (!System.shared.isActivated) {
-                        timer.invalidate()
-                        return
-                    }
-                    
-                    Task {
-                        await postNearest()
-                    }
-                }
+                LocationTracker.shared.startTracking()
+                LocationTrackingService.shared.connect()
             }
         }
     }

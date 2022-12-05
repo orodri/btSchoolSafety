@@ -6,5 +6,11 @@
 	<string>$(PROXIMITY_UUID)</string>
 	<key>SERVER_URL</key>
 	<string>$(SERVER_URL)</string>
+	<key>SERVER_WS_URL</key>
+	<string>$(SERVER_WS_URL)</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 </dict>
 </plist>

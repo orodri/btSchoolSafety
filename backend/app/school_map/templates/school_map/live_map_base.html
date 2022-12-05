@@ -98,14 +98,7 @@
               drawerLeft: true,
               emergencyType: {{ emergency_type|quote }},
               buildingName: {{ building_name|quote }},
-              roomReportings: [
-                {% for reporting in room_reportings %}
-                {
-                  roomName: {{ reporting.room_name|quote }},
-                  numStudentsNearby: {{ reporting.num_students_nearby }},
-                },
-                {% endfor %}
-              ]
+              roomReportings: [],
           };
         },
         setup() {
@@ -119,6 +112,27 @@
             window.location.href = "/system/deactivate";
           },
         },
+        mounted() {
+          const socket = new WebSocket(
+            "ws://" + window.location.host + "/ws/nearest/first-responder/"
+          );
+
+          socket.onmessage = (e) => {
+            const data = JSON.parse(e.data);
+            roomReportings = [];
+            for (const [roomName, roomCount] of Object.entries(data.roomCounts)) {
+              roomReportings.push({
+                roomName: roomName,
+                numStudentsNearby: roomCount
+              })
+            }
+            this.$data.roomReportings = roomReportings;
+          };
+
+          socket.onclose = function (e) {
+            console.error("Socket closed unexpectedly");
+          }
+        }
       });
 
       app.use(Quasar);
