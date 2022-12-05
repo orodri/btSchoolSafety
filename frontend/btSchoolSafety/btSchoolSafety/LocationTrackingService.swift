@@ -69,8 +69,6 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
         webSocketTask?.send(URLSessionWebSocketTask.Message.data(jsonData)) { error in
             if let error = error {
                 print("Failed with Error \(error.localizedDescription)")
-            } else {
-                print("no op")
             }
         }
     }
