@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23D5DE8B293E8D9300DFA853 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5DE8A293E8D9300DFA853 /* MessageView.swift */; };
 		5AD2869C293BEA9C00F127DF /* LocationTrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD2869B293BEA9C00F127DF /* LocationTrackingService.swift */; };
 		5AD286A0293D04F100F127DF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD2869F293D04F100F127DF /* Config.swift */; };
 		5AD286A2293D0AAA00F127DF /* CLBeacon+btss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23D5DE8A293E8D9300DFA853 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5AD2869B293BEA9C00F127DF /* LocationTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTrackingService.swift; sourceTree = "<group>"; };
 		5AD2869F293D04F100F127DF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLBeacon+btss.swift"; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				5AD286A3293D3E7800F127DF /* LocationTracker.swift */,
 				5AD2869B293BEA9C00F127DF /* LocationTrackingService.swift */,
 				5AD2869F293D04F100F127DF /* Config.swift */,
+				23D5DE8A293E8D9300DFA853 /* MessageView.swift */,
 				5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */,
 				5AFBB55B2920687A00CCEA30 /* Assets.xcassets */,
 				5AF63F472921F968006A1485 /* Config.xcconfig */,
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23D5DE8B293E8D9300DFA853 /* MessageView.swift in Sources */,
 				5AF63F492922D45A006A1485 /* ActiveView.swift in Sources */,
 				5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */,
 				5AFBB56D2921E99600CCEA30 /* WaitingView.swift in Sources */,

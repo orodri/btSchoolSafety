@@ -20,7 +20,7 @@ struct WaitingView: View {
             Text("Emergency reported! A first responder will be in touch shortly. In the mean time, dial 911.")
             Spacer()
             Button("Contact an official") {
-              
+                MessageView(isPresented: $isPresenting)
             }
             Spacer()
             Button("Activate (for demo)") {

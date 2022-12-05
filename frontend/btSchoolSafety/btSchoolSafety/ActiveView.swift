@@ -36,7 +36,9 @@ struct ActiveView: View {
                     .buttonStyle(.bordered)
                     .controlSize(.large)
                 Spacer()
-                Button("Contact an official") {}
+                Button("Contact an official") {
+                    MessageView(isPresented: $isPresented)
+                }
                 Spacer()
             }
         }
