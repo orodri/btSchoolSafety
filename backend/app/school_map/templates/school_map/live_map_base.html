@@ -148,12 +148,12 @@
         },
         mounted() {
           const socket = new WebSocket(
-            "ws://" + window.location.host + "/ws/nearest/first-responder/"
+            "ws://" + window.location.host + "/ws/first-responder"
           );
 
           socket.onmessage = (e) => {
             const data = JSON.parse(e.data);
-            roomReportings = [];
+            const roomReportings = [];
             for (const [roomName, roomCount] of Object.entries(data.roomCounts)) {
               roomReportings.push({
                 roomName: roomName,

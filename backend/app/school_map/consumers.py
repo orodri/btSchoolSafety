@@ -20,7 +20,7 @@ def _validate_nearest_json(received_json):
 
 
 # What the iOS clients are connecting to
-class LocationTrackingConsumer(WebsocketConsumer):
+class StudentConsumer(WebsocketConsumer):
     def connect(self):
         # Accept the connection
         self.accept()
@@ -52,7 +52,7 @@ class LocationTrackingConsumer(WebsocketConsumer):
 
         # Send to the first responders' clients
         async_to_sync(self.channel_layer.group_send)(
-            'first_responder_directory_level_updates', {
+            'first_responders', {
                 'type': 'directory_level_update',
                 'room_counts': room_counts
             }
@@ -60,16 +60,16 @@ class LocationTrackingConsumer(WebsocketConsumer):
 
 
 # What the first responders clients are connecting to
-class DirectoryLevelReportingConsumer(WebsocketConsumer):
+class FirstResponderConsumer(WebsocketConsumer):
     def connect(self):
         async_to_sync(self.channel_layer.group_add)(
-            'first_responder_directory_level_updates', self.channel_name
+            'first_responders', self.channel_name
         )
         self.accept()
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
-            'first_responder_directory_level_updates', self.channel_name
+            'first_responders', self.channel_name
         )
 
     def receive(self, text_data=None, bytes_data=None):
