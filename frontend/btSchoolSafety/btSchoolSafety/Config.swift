@@ -19,6 +19,7 @@ let proximityUuid = {
 let serverHttpUrl = {
     guard let url = Bundle.main.object(forInfoDictionaryKey: "SERVER_URL") as? String,
           let url = URL(string: url.replacingOccurrences(of: "\\", with: "")) else {
+
         fatalError("SERVER_URL not set. Is Config.xcconfig correct?")
     }
     
