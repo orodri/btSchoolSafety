@@ -1,11 +1,5 @@
 {
     "editor.formatOnSave": true,
-    "files.associations": {
-        "*.html": "jinja-html"
-    },
-    "emmet.includeLanguages": {
-        "jinja-html": "html"
-    },
     "python.defaultInterpreterPath": "${workspaceFolder}/backend/app/venv/bin/python",
-    "python.terminal.activateEnvironment": true
+    "python.terminal.activateEnvironment": true,
 }

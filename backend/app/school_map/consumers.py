@@ -2,7 +2,8 @@ import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from school_map.models import Room, Beacon, Student
+from school_map.directory_level_reporting import compute_students_near_rooms
+from school_map.models import Student
 
 
 def _validate_nearest_json(received_json):
@@ -16,28 +17,6 @@ def _validate_nearest_json(received_json):
         return False
 
     return True
-
-
-def _compute_students_near_rooms():
-    # First get all rooms
-    rooms = Room.objects.all()
-    room_counts = {}
-    for room in rooms:
-        room_counts[room.room_name] = 0
-
-    # Create Beacon -> Room map
-    beacons = Beacon.objects.all()
-    to_room = {}
-    for beacon in beacons:
-        to_room[beacon.minor] = beacon.room_name
-
-    # Map Student -> Beacon -> Room and then tally
-    students = Student.objects.all()
-    for s in students:
-        if s.beacon_minor_closest_to:
-            room_counts[to_room[s.beacon_minor_closest_to]] += 1
-
-    return room_counts
 
 
 # What the iOS clients are connecting to
@@ -69,7 +48,7 @@ class LocationTrackingConsumer(WebsocketConsumer):
         student.beacon_minor_closest_to = nearest_beacon_minor
         student.save()
 
-        room_counts = _compute_students_near_rooms()
+        room_counts = compute_students_near_rooms()
 
         # Send to the first responders' clients
         async_to_sync(self.channel_layer.group_send)(
