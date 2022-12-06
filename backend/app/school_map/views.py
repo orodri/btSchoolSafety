@@ -11,6 +11,7 @@ import uuid
 
 from school_map.models import BuildingMap, Student
 from system.models import System
+from school_map.directory_level_reporting import compute_students_near_rooms
 
 
 @csrf_exempt
@@ -64,6 +65,7 @@ def map_page(request):
         system.save()
 
     building_map = BuildingMap.objects.first()
+    room_counts = compute_students_near_rooms()
 
     context = {
         'emergency_type': system.emergency_type,
@@ -71,6 +73,7 @@ def map_page(request):
         'map_file_path': "media/" + building_map.upload.name if building_map else None,
         'default_camera_height': building_map.default_camera_height if building_map else 0,
         'max_camera_height': building_map.max_camera_height if building_map else 0,
+        'room_counts': room_counts,
     }
 
     template = loader.get_template('school_map/live_map_base.html')

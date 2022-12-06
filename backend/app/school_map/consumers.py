@@ -2,7 +2,8 @@ import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from school_map.models import Room, Beacon, Student
+from school_map.directory_level_reporting import compute_students_near_rooms
+from school_map.models import Student
 
 
 def _validate_nearest_json(received_json):
@@ -18,30 +19,8 @@ def _validate_nearest_json(received_json):
     return True
 
 
-def _compute_students_near_rooms():
-    # First get all rooms
-    rooms = Room.objects.all()
-    room_counts = {}
-    for room in rooms:
-        room_counts[room.room_name] = 0
-
-    # Create Beacon -> Room map
-    beacons = Beacon.objects.all()
-    to_room = {}
-    for beacon in beacons:
-        to_room[beacon.minor] = beacon.room_name
-
-    # Map Student -> Beacon -> Room and then tally
-    students = Student.objects.all()
-    for s in students:
-        if s.beacon_minor_closest_to:
-            room_counts[to_room[s.beacon_minor_closest_to]] += 1
-
-    return room_counts
-
-
 # What the iOS clients are connecting to
-class LocationTrackingConsumer(WebsocketConsumer):
+class StudentConsumer(WebsocketConsumer):
     def connect(self):
         # Accept the connection
         self.accept()
@@ -69,11 +48,11 @@ class LocationTrackingConsumer(WebsocketConsumer):
         student.beacon_minor_closest_to = nearest_beacon_minor
         student.save()
 
-        room_counts = _compute_students_near_rooms()
+        room_counts = compute_students_near_rooms()
 
         # Send to the first responders' clients
         async_to_sync(self.channel_layer.group_send)(
-            'first_responder_directory_level_updates', {
+            'first_responders', {
                 'type': 'directory_level_update',
                 'room_counts': room_counts
             }
@@ -81,16 +60,16 @@ class LocationTrackingConsumer(WebsocketConsumer):
 
 
 # What the first responders clients are connecting to
-class DirectoryLevelReportingConsumer(WebsocketConsumer):
+class FirstResponderConsumer(WebsocketConsumer):
     def connect(self):
         async_to_sync(self.channel_layer.group_add)(
-            'first_responder_directory_level_updates', self.channel_name
+            'first_responders', self.channel_name
         )
         self.accept()
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
-            'first_responder_directory_level_updates', self.channel_name
+            'first_responders', self.channel_name
         )
 
     def receive(self, text_data=None, bytes_data=None):

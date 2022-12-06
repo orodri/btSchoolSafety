@@ -22,7 +22,7 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
     }
     
     private func openWebSocket() {
-        let url = serverWsUrl.appendingPathComponent("/ws/nearest/")
+        let url = serverWsUrl.appendingPathComponent("/ws/student")
         let request = URLRequest(url: url)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         
