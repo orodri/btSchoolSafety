@@ -56,7 +56,7 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
         })
     }
     
-    func sendNearest(_ nearest: Int?) {
+    private func sendNearest(_ nearest: Int?) {
         let jsonObj: [String: Any?] = [
             "anonIdentifier": System.shared.anonIdentifier,
             "nearest": nearest
@@ -79,23 +79,52 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
         isOpened = false
     }
     
-    func connect() {
+    func beginSendingNearestUpdates() {
         LocationTracker.shared.$beacons.sink() { [self] beacons in
             let beacon = beacons
-                .filter { $0.accuracy > 0 }
-                .sorted { $0.accuracy < $1.accuracy }
+                .filter { $0.accuracy > 0 } // .accuracy is -1 when undetermined which does not mean near
+                .sorted { $0.accuracy < $1.accuracy } // sort by nearest
                 .first
             
             var nearest: Int? = nil
             if let beacon = beacon {
+                // .major/.minor are 16-bits, we'll use 32-bit ints from here
+                // also we're keeping things simple and just identifying beacons with their .minor
                 nearest = Int(truncating: beacon.minor)
             }
             
-            if nearest != previousNearestBeaconMinor {
+            if nearest != previousNearestBeaconMinor { // reduce spamming the server if the nearest hasn't changed
                 self.sendNearest(nearest)
             }
             
             previousNearestBeaconMinor = nearest
+        }.store(in: &subscriptions)
+    }
+    
+    private func sendPrecise(_ annotatedBeaconsToSend: [(minor: Int, distance: Double)]) {
+        let jsonObj: [AnyHashable: Any?] = [
+            "anonIdentifier": System.shared.anonIdentifier,
+            "beacons": annotatedBeaconsToSend.map { [ "minor": $0.minor, "distance": $0.distance ] }
+        ]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObj) else {
+            print("sendPrecise: jsonData serialization error")
+            return
+        }
+        
+        webSocketTask?.send(.data(jsonData)) { error in
+            if let error = error {
+                print("sendPrecise failed with error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func beginSendingPreciseLocationUpdates() {
+        LocationTracker.shared.$beacons.sink() { [self] beacons in
+            let beacons = beacons
+                .filter { $0.accuracy > 0 }
+                .map { (Int(truncating: $0.minor), $0.accuracy) }
+            
+            self.sendPrecise(beacons)
         }.store(in: &subscriptions)
     }
 }

@@ -53,7 +53,8 @@ struct ActiveView: View {
                 System.shared.isActivated = true
                 
                 LocationTracker.shared.startTracking()
-                LocationTrackingService.shared.connect()
+                LocationTrackingService.shared.beginSendingNearestUpdates()
+                LocationTrackingService.shared.beginSendingPreciseLocationUpdates()
             }
         }
     }

@@ -145,6 +145,20 @@
             camera.position.y = {{ default_camera_height }};
             camera.lookAt(new THREE.Vector3(0, 0, 0));
           },
+          onReceivedRoomCounts(roomCounts) {
+            const roomReportings = [];
+            for (const [roomName, roomCount] of Object.entries(roomCounts)) {
+              roomReportings.push({
+                roomName: roomName,
+                numStudentsNearby: roomCount
+              })
+            }
+            this.roomReportings = roomReportings;
+          },
+          onReceivedStudentPositions(studentPositions) {
+            // TODO: update avatars
+            console.log(studentPositions);
+          },
         },
         mounted() {
           const socket = new WebSocket(
@@ -153,14 +167,12 @@
 
           socket.onmessage = (e) => {
             const data = JSON.parse(e.data);
-            const roomReportings = [];
-            for (const [roomName, roomCount] of Object.entries(data.roomCounts)) {
-              roomReportings.push({
-                roomName: roomName,
-                numStudentsNearby: roomCount
-              })
+
+            if (data.roomCounts) {
+              this.onReceivedRoomCounts(data.roomCounts);
+            } else if (data.studentPositions) {
+              this.onReceivedStudentPositions(data.studentPositions);
             }
-            this.$data.roomReportings = roomReportings;
           };
 
           socket.onclose = function (e) {
