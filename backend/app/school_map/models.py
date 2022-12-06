@@ -25,3 +25,5 @@ class Student(models.Model):
     beacon_minor_closest_to = models.IntegerField(null=True, default=None)
     position_x = models.FloatField(null=True, default=None)
     position_y = models.FloatField(null=True, default=None)
+    user_reported_status = models.CharField(
+        max_length=200, default=None, null=True)
