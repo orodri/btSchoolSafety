@@ -5,6 +5,8 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from system.models import System
 
+from django.views.decorators.csrf import csrf_exempt
+
 
 @login_required
 def index(request):
@@ -42,10 +44,12 @@ def deactivate_page(request):
 
     return HttpResponse(template.render(None, request))
 
-@login_required
-@require_http_methods(["GET"])
+
+@require_http_methods(["GET", "POST"])
+@csrf_exempt
 def message_test(request):
     template = loader.get_template('system/message.html')
-
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        print('here')
     return HttpResponse(template.render(None, request))
-
