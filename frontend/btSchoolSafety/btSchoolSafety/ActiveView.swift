@@ -9,8 +9,13 @@ import SwiftUI
 
 struct ActiveView: View {
     @Binding var isPresented: Bool
+<<<<<<< Updated upstream
     @State var messageView = false
     
+=======
+    @State private var showingAlert = false
+    @State private var alertType = ""
+>>>>>>> Stashed changes
     var body: some View {
         VStack {
             Group() {
@@ -19,20 +24,34 @@ struct ActiveView: View {
                     .font(.largeTitle)
                 Spacer()
                 Text("Your location is not currently being shared with first responders. ❌ To fix this grant location access always in settings:")
-                Button("I need medical assistance!") {}
+                Button("I need medical assistance!") {
+                    Task{
+                        await postStatus(.medAssistance)
+                        showingAlert = true
+                        alertType = "I need medical assistance!"
+                    }
+                }
                     .buttonStyle(.bordered)
                     .controlSize(.large)
                 Spacer()
             }
             Group() {
                 Button("I am safe") {
-
+                    Task{
+                        await postStatus(.safe)
+                        showingAlert = true
+                        alertType = "Safe"
+                    }
                 }
                     .buttonStyle(.bordered)
                     .controlSize(.large)
                 Spacer()
                 Button("The shooter is near me") {
-
+                    Task{
+                        await postStatus(.shooter)
+                        showingAlert = true
+                        alertType = "Shooter is near me"
+                    }
                 }
                     .buttonStyle(.bordered)
                     .controlSize(.large)
@@ -43,13 +62,16 @@ struct ActiveView: View {
                     MessageView(isPresented:$messageView)
                 }
                 Spacer()
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text("Your Status Posted as:"), message: Text(alertType), dismissButton: .default(Text("OK")))
+                    }
             }
         }
         .padding()
         .onAppear() {
             Task {
                 await postRegister()
-                
+                await postStatus(.none)
                 System.shared.isActivated = true
                 
                 LocationTracker.shared.startTracking()
