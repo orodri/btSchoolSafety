@@ -17,7 +17,7 @@ struct ContentView: View {
             Button("Settings...") {
                 UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
             }
-            List(beacons.beacons.sorted(by: { Double(truncating: $0.minor) < Double(truncating: $1.minor) }),
+            List(beacons.beacons.sorted(by: { ($0.accuracy) < ($1.accuracy) }),
                  id: \.label) { beacon in
                 HStack() {
                     Text("\(beacon.major):\(beacon.minor)")
@@ -26,9 +26,14 @@ struct ContentView: View {
                     Spacer()
                     Text(beacon.accuracy.formatted())
                 }
+                var (_,_) = beacons.findLocation()
             }
+
             .onAppear {
                 beacons.startRanging()
+                /*for i in 1...100000{
+                    
+                }*/
             }
             .onDisappear() {
                 beacons.stopRanging()

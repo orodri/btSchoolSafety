@@ -45,6 +45,53 @@ class Beacons: NSObject, ObservableObject {
     func stopRanging() {
         locationManager.stopRangingBeacons(satisfying: matchingUuid)
     }
+    
+    func findLocation() -> (Double, Double){
+        /*if beacons.count < 3 {
+            return (-1,-1)
+        }*/
+        var activeBcns: [CLBeacon] = []
+        for beacon in beacons{
+            if beacon.accuracy != -1 {
+                activeBcns.append(beacon)
+            }
+        }
+        if activeBcns.count < 3{
+            return(-1,-1)
+        }
+        var bcnCordinates: [(Double,Double)] = []
+        for i in 0...2{
+            if Double(truncating: activeBcns[i].minor) == 288 {
+                if Double(truncating: activeBcns[i].major) == 924 {
+                    bcnCordinates.append((-2.4,2.88))
+                }
+                else{
+                    bcnCordinates.append((2.4,2.88))
+                }
+            }
+            else{
+                if Double(truncating: activeBcns[i].major) == 924 {
+                    bcnCordinates.append((-2.4,0))
+                }
+                else{
+                    bcnCordinates.append((2.4,0))
+                }
+            }
+        }
+        let distance1 = activeBcns[0].accuracy
+        let distance2 = activeBcns[1].accuracy
+        let distance3 = activeBcns[2].accuracy
+        let a = -2*bcnCordinates[0].0 + 2*bcnCordinates[1].0
+        let b = -2*bcnCordinates[0].1 + 2*bcnCordinates[1].1
+        let c = pow(distance1,2) - pow(distance2,2) - pow(bcnCordinates[0].0,2) + pow(bcnCordinates[1].0,2) - pow(bcnCordinates[0].1,2) + pow(bcnCordinates[1].1,2)
+        let d = -2*bcnCordinates[1].0 + 2*bcnCordinates[2].0
+        let e = -2*bcnCordinates[1].1 + 2*bcnCordinates[2].1
+        var f = pow(distance2,2) - pow(distance3,2) - pow(bcnCordinates[1].0,2)
+        f = f + pow(bcnCordinates[2].0,2) - pow(bcnCordinates[1].1,2) + pow(bcnCordinates[2].1,2)
+        let x = (c*e - f*b)/(e*a-b*d)
+        let y = (c*d-a*f)/(b*d-a*e)
+        return (x,y)
+    }
 }
 
 extension Beacons: CLLocationManagerDelegate {
