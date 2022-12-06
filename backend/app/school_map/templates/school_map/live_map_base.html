@@ -111,8 +111,11 @@
         }
       }
     </script>
-
     <script type="module">
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
       const app = Vue.createApp({
         delimiters: ["[[", "]]"],
         data() {
@@ -156,8 +159,7 @@
             this.roomReportings = roomReportings;
           },
           onReceivedStudentPositions(studentPositions) {
-            // TODO: update avatars
-            console.log(studentPositions);
+            updateStudentAvatarsOrCreate(scene, avatars, studentPositions);
           },
         },
         mounted() {
@@ -184,7 +186,95 @@
       app.use(Quasar);
       app.mount("#q-app");
 
-      {% include "school_map/live_map_three_js.js" %}
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0xffffff, 0);
+      document
+        .getElementById("btss-three-js-container")
+        .appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.mouseButtons = {
+        LEFT: THREE.MOUSE.PAN,
+        MIDDLE: THREE.MOUSE.DOLLY,
+        RIGHT: THREE.MOUSE.ROTATE,
+      };
+      controls.touches = {
+        ONE: THREE.TOUCH.PAN,
+        TWO: THREE.TOUCH.DOLLY_ROTATE,
+      };
+      controls.screenSpacePanning = true;
+      controls.minDistance = 1;
+      controls.maxDistance = {{ max_camera_height }};
+      controls.maxPolarAngle = Math.PI / 4;
+
+      camera.position.y = {{ default_camera_height }};
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+      const loader = new GLTFLoader();
+      let schoolMap;
+
+      loader.load(
+        {{ map_file_path|quote }},
+        (gltf) => {
+          schoolMap = gltf.scene.children[0];
+          schoolMap.material = new THREE.MeshBasicMaterial({
+            color: 0xbbdede
+          });
+          scene.add(schoolMap);
+          animate(); // Starts rendering after the map is loaded
+        },
+        undefined,
+        function (error) {
+          console.error(error);
+        }
+      );
+
+      let avatarGeometry;
+      let avatars = {};
+      loader.load("media/person.glb", (gltf) => {
+        avatarGeometry = gltf.scene.children[0].geometry;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        for (const [_, a] of Object.entries(avatars)) {
+          // Make avatar appear to always be looking at the camera ("billboarding")
+          a.setRotationFromQuaternion(camera.quaternion);
+        }
+        renderer.render(scene, camera);
+      }
+
+      function updateStudentAvatarsOrCreate(scene, avatars, studentPositions) {
+        if (!avatarGeometry) {
+          console.log('avatarGeometry not loaded yet, skipping avatar updates');
+          return;
+        }
+        for (const [anonIdentifier, position] of Object.entries(studentPositions)) {
+          let avatar = avatars[anonIdentifier];
+          if (avatar === undefined) { // Create one
+            avatar = new THREE.Mesh(avatarGeometry)
+            avatar.material = new THREE.MeshBasicMaterial({
+              color: 0xff576c,
+              depthTest: false, // Prevent avatar from clipping below map
+            });
+            avatars[anonIdentifier] = avatar; // Maintain lookup table of added avatars
+            scene.add(avatar);
+          }
+
+          if (!!position) {
+            avatar.position.x = position.x;
+            avatar.position.z = -position.y; // three.js uses a y-up coordinate system
+          }
+        }
+      }
     </script>
   </body>
 </html>
