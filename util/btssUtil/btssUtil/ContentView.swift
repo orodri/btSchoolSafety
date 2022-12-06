@@ -26,9 +26,13 @@ struct ContentView: View {
                     Spacer()
                     Text(beacon.accuracy.formatted())
                 }
-                var (_,_) = beacons.findLocation()
             }
-
+            var (x,y) = beacons.findLocation()
+            HStack(){
+                Text("Your Location (x,y):")
+                Spacer()
+                Text("\(x),\(y)")
+            }
             .onAppear {
                 beacons.startRanging()
                 /*for i in 1...100000{
