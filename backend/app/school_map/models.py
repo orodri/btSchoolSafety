@@ -23,3 +23,5 @@ class Beacon(models.Model):
 class Student(models.Model):
     anon_identifier = models.CharField(max_length=200)
     beacon_minor_closest_to = models.IntegerField(null=True, default=None)
+    position_x = models.FloatField(null=True, default=None)
+    position_y = models.FloatField(null=True, default=None)
