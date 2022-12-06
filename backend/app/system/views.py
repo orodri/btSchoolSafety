@@ -8,6 +8,7 @@ from system.models import System
 from django.views.decorators.csrf import csrf_exempt
 import socket
 
+
 @login_required
 def index(request):
 
@@ -52,21 +53,21 @@ def message_test(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         print('here')
-        s = socket.socket()
-        print ("Admin socket successfully created")
-        port = 1111
-        s.bind('', port)
-        print("socket is binded to %s" %(port))
-        s.listen()
-        print("socket listening")
-        while True:
-            client, addr = s.accept()
-            print("got connection from ", addr)
-            client.send('thanks for connecting'.encode())
+    s = socket.socket()
+    print("Admin socket successfully created")
+    port = 1111
+    s.bind(('', port))
+    print("socket is binded to %s" % (port))
+    s.listen()
+    print("socket listening")
+    while True:
+        client, addr = s.accept()
+        print("got connection from ", addr)
+        client.send('thanks for connecting'.encode())
 
-            # modify these 2 lines after we know when to close connection
-            # when client left
-            # when deactivateds
-            client.close()
-            break
+        # modify these 2 lines after we know when to close connection
+        # when client left
+        # when deactivateds
+        client.close()
+        break
     return HttpResponse(template.render(None, request))
