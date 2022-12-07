@@ -11,6 +11,10 @@ enum PanicType {
     case activeShooting, fire, other
 }
 
+enum StatusType {
+    case medAssistance, safe, shooter, none
+}
+
 func postPanic(_ panic: PanicType) async {
     let url = serverHttpUrl.appendingPathComponent("/panic")
     
@@ -67,5 +71,45 @@ func postRegister() async {
         print("postRegister: \(response)")
     } catch {
         print("postRegister: NETWORKING ERROR")
+    }
+}
+
+func postStatus(_ status: StatusType) async {
+    
+    let url = serverHttpUrl.appendingPathComponent("/status")
+    
+    var jsonObj: [String: Any?] = [:]
+    switch (status) {
+    case .medAssistance:
+        jsonObj["type"] = "requesting-medical"
+    case .safe:
+        jsonObj["type"] = "is-safe"
+    case .shooter:
+        jsonObj["type"] = "sees-shooter"
+    case .none:
+        jsonObj["type"] = nil
+    }
+    
+    guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObj) else {
+        print("postStatus: jsonData serialization error")
+        return
+    }
+    guard let assignedIdentifier = jsonObj["anon_identifier"] as? String else {
+        print("postStatus: failed to retrieve anon_identifier")
+        return
+    }
+    
+    DispatchQueue.main.async {
+        System.shared.anonIdentifier = assignedIdentifier
+    }
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.httpBody = jsonData
+    
+    do {
+        let (_, response) = try await URLSession.shared.data(for: request)
+        print("postStatus: \(response)")
+    } catch {
+        print("postStatus: NETWORKING ERROR")
     }
 }
