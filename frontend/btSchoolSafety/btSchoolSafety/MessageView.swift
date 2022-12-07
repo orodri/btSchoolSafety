@@ -11,8 +11,12 @@ import SwiftUI
 struct MessageView: View {
     @Binding var isPresented: Bool
     @State private var text: String = ""
+//    @State private var chat_history = ChatHistory.shared.chat_history;
+    @ObservedObject private var chatObject = ChatHistory()
+    
+    
     var body: some View {
-        VStack {
+        VStack{
             HStack{
                 Spacer()
                 Button("Cancel") {
@@ -20,35 +24,44 @@ struct MessageView: View {
                 }
             }
             NavigationView {
-//                Form {
-//                    Section {
-//                        Text("Hello, world!")
-//                    }
-//                    Section{
-//                        Text("Hi ")
-//                    }
-//                }
-                List(){}
+                VStack(){
+                    ForEach(ChatHistory.shared.get_chat_history(), id: \.self) { chat in
+                        HStack(){
+                            Spacer()
+                            Text(chat.text)
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(
+                                    Color(UIColor.lightGray)
+                                )
+                                .cornerRadius(25)
+                        }
+                    }
+                    Spacer()
+                }
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle("Officer")
             }
            
             Spacer()
-            TextField(
-                "Type a message ...",
-                text: $text
-            ).onSubmit {
-                print(text)
-                LocationTrackingService.shared.beginSendChat(text: text)
-                self.text = ""
+            ZStack(){
+                TextField(
+                    "Type a message ...",
+                    text: $text
+                ).onSubmit {
+                    print(text)
+                    ChatHistory.shared.add_chat(user: "You", text: text)
+                    LocationTrackingService.shared.beginSendChat(text: text)
+                    self.text = ""
+                }
+                .padding(4)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(Color(UIColor.lightGray), lineWidth: 2)
+                )
+                .padding()
             }
-            .padding(4)
-            .overlay(
-                RoundedRectangle(cornerRadius: 14)
-                    .stroke(Color(UIColor.lightGray), lineWidth: 2)
-            )
-            .padding()
-           
+            
         }
         .padding()
     }
