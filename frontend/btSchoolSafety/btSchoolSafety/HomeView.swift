@@ -14,18 +14,23 @@ struct HomeView: View {
     @State private var isPresenting = false
     
     var body: some View {
-        if (system.isWaitingForActivation) {
+        if (system.isActivated) {
+            ActiveView()
+        } else if (system.isWaitingForActivation) {
             WaitingView(isPresenting: false)
-        } else if (!system.isActivated) {
+        } else {
+            let locationManager = CLLocationManager()
+            var shouldHide = (locationManager.authorizationStatus == .authorizedAlways)
             VStack {
                 Spacer()
                 Text("Your location is not being shared right now.")
+                    .opacity(shouldHide ? 0 : 1)
                 Button(action: {
                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                 }){ Text("Go to settings...").underline() }
-                // TODO: ^^ This button needs to be hidden when locations are set right
+                    .opacity(shouldHide ? 0 : 1)
                 Spacer()
-                Text("Your app permissions are set correctly. ✅")
+                Text("Your app permissions are set correctly. ✅").opacity(shouldHide ? 1 : 0)
                 Spacer()
                 Button(action:{
                     isPresenting.toggle()
@@ -45,8 +50,6 @@ struct HomeView: View {
             .fullScreenCover(isPresented: $isPresenting) {
                 PanicSelector(isPresented: $isPresenting)
             }
-        } else {
-            ActiveView()
         }
     }
 }

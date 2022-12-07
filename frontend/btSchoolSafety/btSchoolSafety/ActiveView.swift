@@ -6,19 +6,24 @@
 //
 
 import SwiftUI
+import CoreLocation
+
 
 struct ActiveView: View {
     @State var messageView = false
     @State private var showingAlert = false
-     @State private var alertType = ""
+    @State private var alertType = ""
+    private let locationManager = CLLocationManager();
+    
     var body: some View {
+        var shouldHide = (locationManager.authorizationStatus == .authorizedAlways)
         VStack {
             Group() {
                 Spacer()
                 Text("There is an active shooting reported at your school")
                     .font(.largeTitle)
                 Spacer()
-                Text("Your location is not currently being shared with first responders. ❌ To fix this grant location access always in settings:")
+                Text("Your location is not currently being shared with first responders. ❌ To fix this grant location access always in settings:").opacity(shouldHide ? 0 : 1)
                 Button("I need medical assistance!") {
                     Task{
                         await postStatus(.medAssistance)

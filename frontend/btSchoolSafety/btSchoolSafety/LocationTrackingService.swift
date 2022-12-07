@@ -190,6 +190,7 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
         }
         DispatchQueue.main.async {
             System.shared.isActivated = status.isActive
+            System.shared.isWaitingForActivation = false
         }
         previousSystemStatus = status
     }
