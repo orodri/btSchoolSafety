@@ -195,7 +195,13 @@
               })
             }
             this.roomReportings = roomReportings;
-        },
+          },
+          onRecievedStatus(totalUsers, medUsers, safeUsers, dangerUsers) {
+            this.totalUsers = totalUsers;
+            this.medUsers = medUsers;
+            this.safeUsers = safeUsers;
+            this.dangerUsers = dangerUsers;
+          },
           onReceivedStudentPositions(studentPositions) {
             updateStudentAvatarsOrCreate(scene, avatars, studentPositions);
           },
@@ -210,6 +216,7 @@
 
               if (data.roomCounts) {
                 this.onReceivedRoomCounts(data.roomCounts);
+                this.onRecievedStatus(data.totalUsers, data.medUsers, data.safeUsers, data.dangerUsers);
               } else if (data.studentPositions) {
                 this.onReceivedStudentPositions(data.studentPositions);
             }
