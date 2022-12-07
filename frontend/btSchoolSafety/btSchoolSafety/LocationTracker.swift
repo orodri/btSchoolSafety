@@ -23,7 +23,6 @@ class LocationTracker: NSObject, ObservableObject {
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.showsBackgroundLocationIndicator = true
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        locationManager.startUpdatingLocation()
     }
     
     func startTracking() {
@@ -33,6 +32,7 @@ class LocationTracker: NSObject, ObservableObject {
     
     func stopTracking() {
         locationManager.stopRangingBeacons(satisfying: matchingUuid)
+        locationManager.stopUpdatingLocation()
         shouldTrack = false
         isTracking = false
     }
@@ -44,6 +44,7 @@ class LocationTracker: NSObject, ObservableObject {
         case .authorizedAlways, .authorizedWhenInUse:
             if shouldTrack {
                 isTracking = true
+                locationManager.startUpdatingLocation()
                 locationManager.startRangingBeacons(satisfying: matchingUuid)
                 print("started ranging beacons")
             } else {
@@ -53,13 +54,11 @@ class LocationTracker: NSObject, ObservableObject {
             }
             if locationManager.authorizationStatus == .authorizedWhenInUse {
                 print("authorizedWhenInUse")
-                // TODO: Explain the app likely won't function properly.
             }
         default:
             print("Not authorized")
             isTracking = false
             locationManager.stopRangingBeacons(satisfying: matchingUuid)
-            // TODO: Explain the app won't function properly to the user.
         }
     }
 }

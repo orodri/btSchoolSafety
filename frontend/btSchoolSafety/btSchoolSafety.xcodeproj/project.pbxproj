@@ -13,6 +13,7 @@
 		5AD286A0293D04F100F127DF /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD2869F293D04F100F127DF /* Config.swift */; };
 		5AD286A2293D0AAA00F127DF /* CLBeacon+btss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */; };
 		5AD286A4293D3E7800F127DF /* LocationTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD286A3293D3E7800F127DF /* LocationTracker.swift */; };
+		5AD286A92940771C00F127DF /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD286A82940771C00F127DF /* Notifications.swift */; };
 		5AF63F492922D45A006A1485 /* ActiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF63F482922D45A006A1485 /* ActiveView.swift */; };
 		5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */; };
 		5AFBB55A2920687900CCEA30 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBB5592920687900CCEA30 /* HomeView.swift */; };
@@ -33,6 +34,7 @@
 		5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLBeacon+btss.swift"; sourceTree = "<group>"; };
 		5AD286A3293D3E7800F127DF /* LocationTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTracker.swift; sourceTree = "<group>"; };
 		5AD286A72940534600F127DF /* Riley.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Riley.xcconfig; sourceTree = "<group>"; };
+		5AD286A82940771C00F127DF /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		5AF63F482922D45A006A1485 /* ActiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveView.swift; sourceTree = "<group>"; };
 		5AFBB5542920687900CCEA30 /* btSchoolSafety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btSchoolSafety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = btSchoolSafetyApp.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				23D5DE8A293E8D9300DFA853 /* MessageView.swift */,
 				2305B01B2940752E00FA0C6D /* ChatHistory.swift */,
 				5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */,
+				5AD286A82940771C00F127DF /* Notifications.swift */,
 				5AFBB55B2920687A00CCEA30 /* Assets.xcassets */,
 				230B648229401E1100861DBF /* Config.xcconfig */,
 				5AD286A72940534600F127DF /* Riley.xcconfig */,
@@ -182,6 +185,7 @@
 				2305B01C2940752E00FA0C6D /* ChatHistory.swift in Sources */,
 				5AFBB56D2921E99600CCEA30 /* WaitingView.swift in Sources */,
 				5AD2869C293BEA9C00F127DF /* LocationTrackingService.swift in Sources */,
+				5AD286A92940771C00F127DF /* Notifications.swift in Sources */,
 				5AD286A0293D04F100F127DF /* Config.swift in Sources */,
 				5AFBB5582920687900CCEA30 /* btSchoolSafetyApp.swift in Sources */,
 				5AFBB56B2921E5C600CCEA30 /* PanicSelector.swift in Sources */,

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ActiveView: View {
-    @Binding var isPresented: Bool
     @State var messageView = false
     @State private var showingAlert = false
      @State private var alertType = ""
@@ -64,17 +63,11 @@ struct ActiveView: View {
             }
         }
         .padding()
-        .onAppear() {
-            Task {
-                System.shared.isActivated = true
-            }
-        }
     }
 }
 
 struct ActiveView_Preview: PreviewProvider {
-    @State static var isPresented = true
     static var previews: some View {
-        ActiveView(isPresented: $isPresented)
+        ActiveView()
     }
 }

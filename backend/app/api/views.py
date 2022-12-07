@@ -4,6 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from system.models import System
 from school_map.models import Student
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 @require_http_methods(["POST"])
@@ -28,7 +30,16 @@ def activate(request):
 
     system.save()
 
-    # Send apple push notifications
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        'students', {
+            'type': 'system_status_broadcast',
+            'systemStatus': {
+                'isActive': system.is_tracking_students_locations,
+                'emergencyType': system.emergency_type,
+            }
+        }
+    )
 
     return HttpResponse(status=200)
 
@@ -44,7 +55,16 @@ def deactivate(request):
     system.emergency_type = None
     system.save()
 
-    # send push notification to apple's push notification service
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        'students', {
+            'type': 'system_status_broadcast',
+            'systemStatus': {
+                'isActive': system.is_tracking_students_locations,
+                'emergencyType': system.emergency_type,
+            }
+        }
+    )
 
     return HttpResponse(status=200)
 

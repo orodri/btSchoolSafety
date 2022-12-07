@@ -26,17 +26,10 @@ struct WaitingView: View {
                 MessageView(isPresented:$messageView)
             }
             Spacer()
-            Button("Activate (for demo)") {
-                isPresenting.toggle()
-            }
-            Spacer()
         }
         .padding()
-        .onAppear() {
-            
-        }
         .fullScreenCover(isPresented: $isPresenting) {
-            ActiveView(isPresented: $isPresenting)
+            ActiveView()
         }
     }
 }

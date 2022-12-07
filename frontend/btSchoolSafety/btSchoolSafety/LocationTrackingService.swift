@@ -14,16 +14,17 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
     private var isConnected = false
     private var isAttemptingReconnect = false
     private var reconnectTimer: Timer?
+    private var attemptRegisterTimer: Timer?
     private var untilNextAttempt = TimeInterval(1)
     private var maxTimeToWaitBeforeNextAttempt = TimeInterval(8)
     private var subscriptions = Set<AnyCancellable>()
     private var previousNearestBeaconMinor: Int?
+    private var previousSystemStatus: SystemStatus?
     
     static let shared = LocationTrackingService()
     
     private override init() {
         super.init()
-        connect()
     }
     
     private func connect() {
@@ -51,6 +52,12 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
                 case .string(let messageString):
                     print(messageString)
                 case .data(let data):
+                    do {
+                        let res = try JSONDecoder().decode(SystemStatusResponse.self, from: data)
+                        self.handleReceivedSystemStatus(res.systemStatus)
+                    } catch {
+                        print("Error parsing message from server: \(error)")
+                    }
                     print(data.description)
                 default:
                     print("Unknown type received from WebSocket")
@@ -99,7 +106,7 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
     
     func beginSendingNearestUpdates() {
         LocationTracker.shared.$beacons.sink() { [self] beacons in
-            if (!isConnected) {
+            if (!isConnected || !System.shared.isActivated) {
                 return
             }
             let beacon = beacons
@@ -137,7 +144,7 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
     
     func beginSendingPreciseLocationUpdates() {
         LocationTracker.shared.$beacons.sink() { [self] beacons in
-            if (!isConnected) {
+            if (!isConnected || !System.shared.isActivated) {
                 return
             }
             let beacons = beacons
@@ -146,6 +153,45 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
             
             self.sendPrecise(beacons)
         }.store(in: &subscriptions)
+    }
+    
+    func attemptToRegisterAndBeginListeningForActivation() {
+        System.shared.$anonIdentifier.sink() { anonIdentifier in
+            if let _ = anonIdentifier {
+                self.attemptRegisterTimer?.invalidate()
+                self.attemptRegisterTimer = nil
+                self.connect()
+            }
+        }.store(in: &subscriptions)
+        
+        self.attemptRegisterTimer = Timer.scheduledTimer(withTimeInterval: 5,
+                                                         repeats: true) { timer in
+            
+            if System.shared.anonIdentifier == nil {
+                Task {
+                    await postRegister()
+                }
+            }
+        }
+        self.attemptRegisterTimer?.fire()
+    }
+    
+    private func handleReceivedSystemStatus(_ status: SystemStatus) {
+        if status.isActive {
+            NotificationManager.shared.sendActivateNotification()
+            LocationTracker.shared.startTracking()
+            beginSendingNearestUpdates()
+            beginSendingPreciseLocationUpdates()
+        } else {
+            if let prev = previousSystemStatus, prev.isActive != status.isActive {
+                NotificationManager.shared.sendDeactivateNotification()
+            }
+            LocationTracker.shared.stopTracking()
+        }
+        DispatchQueue.main.async {
+            System.shared.isActivated = status.isActive
+        }
+        previousSystemStatus = status
     }
     
     private func handleError(_ error: Error?) {

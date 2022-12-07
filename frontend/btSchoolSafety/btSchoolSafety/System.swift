@@ -18,3 +18,12 @@ class System: ObservableObject {
     private init() {}
     
 }
+
+class SystemStatusResponse: Codable {
+    let systemStatus: SystemStatus
+}
+
+class SystemStatus: Codable {
+    let isActive: Bool
+    let emergencyType: String?
+}

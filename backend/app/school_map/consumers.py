@@ -16,11 +16,38 @@ from school_map.directory_level_reporting import compute_danger_students
 from easy_trilateration.model import Circle
 from trilateration import trilateration
 
+from system.models import System
+
 # What the iOS clients are connecting to
+
+
 class StudentConsumer(WebsocketConsumer):
     def connect(self):
         # Accept the connection
         self.accept()
+
+        # Get current system state
+        system, _ = System.objects.get_or_create()
+
+        # Inform iOS clients what the current state is
+        self.send(bytes_data=json.dumps({
+            'systemStatus': {
+                'isActive': system.is_tracking_students_locations,
+                'emergencyType': system.emergency_type,
+            }
+        }).encode())
+
+        # Subscribe to future messages for students
+        async_to_sync(self.channel_layer.group_add)(
+            'students', self.channel_name
+        )
+
+    def system_status_broadcast(self, event):
+        system_status = event['systemStatus']
+
+        self.send(bytes_data=json.dumps({
+            'systemStatus': system_status
+        }).encode())
 
     def disconnect(self, close_code):
         pass
