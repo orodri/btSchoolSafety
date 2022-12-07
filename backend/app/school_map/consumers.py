@@ -39,7 +39,7 @@ class StudentConsumer(WebsocketConsumer):
         # Send to the first responders' clients
         async_to_sync(self.channel_layer.group_send)(
             'first_responders', {
-                'type': 'student_chat_update',
+                'type': 'chat_update',
                 'chat_content': chat_content,
             }
         )

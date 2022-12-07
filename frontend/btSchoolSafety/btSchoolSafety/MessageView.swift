@@ -42,6 +42,12 @@ struct MessageView: View {
                 LocationTrackingService.shared.beginSendChat(text: text)
                 self.text = ""
             }
+            .padding(4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(Color(UIColor.lightGray), lineWidth: 2)
+            )
+            .padding()
            
         }
         .padding()
