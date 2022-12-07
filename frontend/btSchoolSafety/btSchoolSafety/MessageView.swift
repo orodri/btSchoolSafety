@@ -38,7 +38,8 @@ struct MessageView: View {
                 "Type a message ...",
                 text: $text
             ).onSubmit {
-                print($text)
+                print(text)
+                LocationTrackingService.shared.beginSendChat(text: text)
                 self.text = ""
             }
            

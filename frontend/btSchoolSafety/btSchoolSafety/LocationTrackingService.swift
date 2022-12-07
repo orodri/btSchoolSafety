@@ -75,6 +75,10 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
 
     }
     
+    func beginSendChat(text: String?){
+        sendChat(text)
+    }
+    
     private func sendNearest(_ nearest: Int?) {
         let jsonObj: [String: Any?] = [
             "anonIdentifier": System.shared.anonIdentifier,
