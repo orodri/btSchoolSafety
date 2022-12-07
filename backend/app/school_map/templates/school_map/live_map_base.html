@@ -75,36 +75,20 @@
           </q-list>
           <q-list>
             <q-item>
-              <q-item-section>
-                Students:
-              </q-item-section> 
-              <q-item-section side>
-                [[ totalUsers ]]
-              </q-item-section> 
+              <q-item-section> Students: </q-item-section>
+              <q-item-section side> [[ totalUsers ]] </q-item-section>
             </q-item>
-            <q-item> 
-              <q-item-section>
-              Requesting Medical Attention:
-              </q-item-section> 
-              <q-item-section side>
-              [[ medUsers ]]
-              </q-item-section>
+            <q-item>
+              <q-item-section> Requesting Medical Attention: </q-item-section>
+              <q-item-section side> [[ medUsers ]] </q-item-section>
             </q-item>
-            <q-item> 
-              <q-item-section>
-              Safe:
-              </q-item-section> 
-              <q-item-section side>
-              [[ safeUsers ]]
-              </q-item-section>
+            <q-item>
+              <q-item-section> Safe: </q-item-section>
+              <q-item-section side> [[ safeUsers ]] </q-item-section>
             </q-item>
-            <q-item> 
-              <q-item-section>
-              Seeing Shooter:
-              </q-item-section> 
-              <q-item-section side>
-              [[ dangerUsers ]]
-              </q-item-section>
+            <q-item>
+              <q-item-section> Seeing Shooter: </q-item-section>
+              <q-item-section side> [[ dangerUsers ]] </q-item-section>
             </q-item>
           </q-list>
         </q-drawer>
@@ -325,6 +309,7 @@
             avatar.position.x = position.x;
             avatar.position.z = -position.y; // three.js uses a y-up coordinate system
           }
+          avatar.visible = !!position;
         }
       }
     </script>

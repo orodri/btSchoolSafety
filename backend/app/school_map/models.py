@@ -18,6 +18,8 @@ class Room(models.Model):
 class Beacon(models.Model):
     minor = models.IntegerField()
     room_name = models.CharField(max_length=200)
+    position_x = models.FloatField(null=True, default=None)
+    position_y = models.FloatField(null=True, default=None)
 
 
 class Student(models.Model):
