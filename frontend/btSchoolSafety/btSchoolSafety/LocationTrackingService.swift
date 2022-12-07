@@ -62,6 +62,19 @@ class LocationTrackingService: NSObject, ObservableObject, URLSessionDelegate {
         })
     }
     
+    private func sendChat(_ chat_content: String?){
+        let jsonObj: [String: Any?] = [
+            "anonIdentifier": System.shared.anonIdentifier,
+            "chat_content": chat_content
+        ]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObj) else {
+            print("sendChat: jsonData serialization error")
+            return
+        }
+        webSocketTask?.send(.data(jsonData), completionHandler: handleError)
+
+    }
+    
     private func sendNearest(_ nearest: Int?) {
         let jsonObj: [String: Any?] = [
             "anonIdentifier": System.shared.anonIdentifier,
