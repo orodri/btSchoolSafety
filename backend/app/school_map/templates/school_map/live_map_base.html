@@ -161,25 +161,32 @@
           onReceivedStudentPositions(studentPositions) {
             updateStudentAvatarsOrCreate(scene, avatars, studentPositions);
           },
+          connect() {
+            console.log("Connecting...")
+            const socket = new WebSocket(
+              "ws://" + window.location.host + "/ws/first-responder"
+            );
+
+            socket.onmessage = (e) => {
+              const data = JSON.parse(e.data);
+
+              if (data.roomCounts) {
+                this.onReceivedRoomCounts(data.roomCounts);
+              } else if (data.studentPositions) {
+                this.onReceivedStudentPositions(data.studentPositions);
+              }
+            };
+
+            socket.onclose = (e) => {
+              console.error("Socket closed unexpectedly will attempt to reconnect in 5s");
+              setTimeout(() => {
+                this.connect()
+              }, 5000);
+            }
+          },
         },
         mounted() {
-          const socket = new WebSocket(
-            "ws://" + window.location.host + "/ws/first-responder"
-          );
-
-          socket.onmessage = (e) => {
-            const data = JSON.parse(e.data);
-
-            if (data.roomCounts) {
-              this.onReceivedRoomCounts(data.roomCounts);
-            } else if (data.studentPositions) {
-              this.onReceivedStudentPositions(data.studentPositions);
-            }
-          };
-
-          socket.onclose = function (e) {
-            console.error("Socket closed unexpectedly");
-          }
+          this.connect();
         }
       });
 
