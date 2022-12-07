@@ -35,7 +35,7 @@ class StudentConsumer(WebsocketConsumer):
     def on_received_chat_update(self, received_json):
         if not validate_chat_json(received_json):
             return
-        chat_content = received_json['chat']
+        chat_content = received_json['chat_content']
         anon_identifier = received_json['anonIdentifier']
         # Send to the first responders' clients
         async_to_sync(self.channel_layer.group_send)(
