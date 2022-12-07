@@ -205,6 +205,9 @@
           onReceivedStudentPositions(studentPositions) {
             updateStudentAvatarsOrCreate(scene, avatars, studentPositions);
           },
+          onReceiveChat(chat_content){
+            
+          },
           connect() {
             console.log("Connecting...")
           const socket = new WebSocket(
@@ -213,13 +216,15 @@
 
           socket.onmessage = (e) => {
             const data = JSON.parse(e.data);
-
+            console.log(data);
               if (data.roomCounts) {
                 this.onReceivedRoomCounts(data.roomCounts);
                 this.onRecievedStatus(data.totalUsers, data.medUsers, data.safeUsers, data.dangerUsers);
               } else if (data.studentPositions) {
                 this.onReceivedStudentPositions(data.studentPositions);
-            }
+              } else if (data.chat){
+                this.onReceiveChat(data.chat);
+              }
           };
 
             socket.onclose = (e) => {

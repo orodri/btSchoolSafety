@@ -5,8 +5,8 @@ def validate_chat_json(received_json):
         return False
     if type(received_json['chat_content']) is not str and received_json['chat_content'] is not None:
         return False
-    if type(received_json['anonIdentifier']) is not str:
-        return False
+    # if type(received_json['anonIdentifier']) is not str:
+    #     return False
 
     return True
 
