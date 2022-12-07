@@ -85,12 +85,16 @@
             </q-item-section>
           </q-item>
         </q-list>
-      </q-drawer>
-      <q-drawer>
         <q-list v-for="chat in chatHistory">
-          Student: [[ chat ]]
+          <q-item-section>
+            Student:
+          </q-item-section> 
+          <q-item-section>
+            [[ chat ]]
+          </q-item-section>
         </q-list>
       </q-drawer>
+      
       <q-page-container>
         <q-page>
           <div v-if="!!buildingName" id="btss-three-js-container"></div>
@@ -132,21 +136,20 @@
       data() {
         return {
           drawerLeft: true,
-          emergencyType: {{ emergency_type | quote }
-      },
-      buildingName: {{ building_name| quote }},
+          emergencyType: {{ emergency_type | quote }},
+        buildingName: {{ building_name| quote }},
     roomReportings: [
       {% for room_name, room_count in room_counts.items %}
     {
-      roomName: { { room_name | quote } },
-      numStudentsNearby: { { room_count } }
+      roomName: {{ room_name | quote }},
+      numStudentsNearby: {{ room_count }}
     },
     {% endfor %}
               ],
-    totalUsers: { { total_users } },
-    medUsers: { { med_users } },
-    safeUsers: { { safe_users } },
-    dangerUsers: { { danger_users } },
+    totalUsers: {{ total_users }},
+    medUsers: {{ med_users }},
+    safeUsers: {{ safe_users }},
+    dangerUsers: {{ danger_users }},
     chatHistory: [],
 
           };
@@ -163,8 +166,7 @@
       },
       resetCamera() {
         controls.reset();
-        camera.position.y = {{ default_camera_height }
-      };
+        camera.position.y = {{ default_camera_height }};
       camera.lookAt(new THREE.Vector3(0, 0, 0));
     },
     onReceivedRoomCounts(roomCounts) {
