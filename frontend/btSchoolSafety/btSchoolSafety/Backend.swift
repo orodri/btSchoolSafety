@@ -18,7 +18,10 @@ enum StatusType {
 func postPanic(_ panic: PanicType) async {
     let url = serverHttpUrl.appendingPathComponent("/panic")
     
-    var jsonObj: [String: String] = [:]
+    var jsonObj: [String: Any?] = [
+        "anonIdentifier": System.shared.anonIdentifier
+    ]
+    
     switch (panic) {
     case .activeShooting:
         jsonObj["type"] = "active-shooting"

@@ -66,12 +66,7 @@ struct ActiveView: View {
         .padding()
         .onAppear() {
             Task {
-                await postRegister()
                 System.shared.isActivated = true
-                
-                LocationTracker.shared.startTracking()
-                LocationTrackingService.shared.beginSendingNearestUpdates()
-                LocationTrackingService.shared.beginSendingPreciseLocationUpdates()
             }
         }
     }
