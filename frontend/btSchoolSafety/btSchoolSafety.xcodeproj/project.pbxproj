@@ -24,12 +24,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		230B648229401E1100861DBF /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		23D5DE8A293E8D9300DFA853 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		5AD2869B293BEA9C00F127DF /* LocationTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTrackingService.swift; sourceTree = "<group>"; };
 		5AD2869F293D04F100F127DF /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLBeacon+btss.swift"; sourceTree = "<group>"; };
 		5AD286A3293D3E7800F127DF /* LocationTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTracker.swift; sourceTree = "<group>"; };
-		5AF63F472921F968006A1485 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		5AF63F482922D45A006A1485 /* ActiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveView.swift; sourceTree = "<group>"; };
 		5AFBB5542920687900CCEA30 /* btSchoolSafety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = btSchoolSafety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBB5572920687900CCEA30 /* btSchoolSafetyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = btSchoolSafetyApp.swift; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 				23D5DE8A293E8D9300DFA853 /* MessageView.swift */,
 				5AD286A1293D0AAA00F127DF /* CLBeacon+btss.swift */,
 				5AFBB55B2920687A00CCEA30 /* Assets.xcassets */,
-				5AF63F472921F968006A1485 /* Config.xcconfig */,
+				230B648229401E1100861DBF /* Config.xcconfig */,
 				5AFBB55D2920687A00CCEA30 /* Preview Content */,
 			);
 			path = btSchoolSafety;
@@ -191,7 +191,7 @@
 /* Begin XCBuildConfiguration section */
 		5AFBB5602920687A00CCEA30 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5AF63F472921F968006A1485 /* Config.xcconfig */;
+			baseConfigurationReference = 230B648229401E1100861DBF /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -306,13 +306,14 @@
 		};
 		5AFBB5632920687A00CCEA30 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 230B648229401E1100861DBF /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"btSchoolSafety/Preview Content\"";
-				DEVELOPMENT_TEAM = 2H99YC92SN;
+				DEVELOPMENT_TEAM = K2W2M8B2GV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = btSchoolSafety/Info.plist;
@@ -346,7 +347,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"btSchoolSafety/Preview Content\"";
-				DEVELOPMENT_TEAM = 2H99YC92SN;
+				DEVELOPMENT_TEAM = K2W2M8B2GV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = btSchoolSafety/Info.plist;
