@@ -45,6 +45,9 @@ struct HomeView: View {
                                         .font(.largeTitle)
                 }.simultaneousGesture(LongPressGesture(minimumDuration: 3.0).onEnded({_ in
                     isPresenting.toggle()
+                    LocationTracker.shared.startTracking()
+                    LocationTrackingService.shared.beginSendingNearestUpdates()
+                    LocationTrackingService.shared.beginSendingPreciseLocationUpdates()
                 }))
 //                .buttonStyle(.bordered)
 //                .tint(.red)
@@ -53,6 +56,11 @@ struct HomeView: View {
                 Text("Hold the panic button for 3 seconds to activate.")
             }
             .padding()
+            .onAppear(){
+                Task {
+                    await postRegister()
+                }
+            }
             .fullScreenCover(isPresented: $isPresenting) {
                 PanicSelector(isPresented: $isPresenting)
             }
