@@ -16,7 +16,6 @@ from school_map.directory_level_reporting import compute_danger_students
 from easy_trilateration.model import Circle
 from trilateration import trilateration
 
-
 # What the iOS clients are connecting to
 class StudentConsumer(WebsocketConsumer):
     def connect(self):
@@ -33,7 +32,6 @@ class StudentConsumer(WebsocketConsumer):
             received_json = json.loads(text_data)
         elif bytes_data:
             received_json = json.loads(bytes_data.decode())
-
         # Handle different types of messages
         if 'nearest' in received_json:
             self.on_received_directory_level_update(received_json)
@@ -46,6 +44,7 @@ class StudentConsumer(WebsocketConsumer):
         if not validate_chat_json(received_json):
             return
         chat_content = received_json['chat_content']
+
         # Send to the first responders' clients
         async_to_sync(self.channel_layer.group_send)(
             'first_responders', {
@@ -53,7 +52,7 @@ class StudentConsumer(WebsocketConsumer):
                 'chat_content': chat_content,
             }
         )
-        print("chat received by IOS socket")
+        print(chat_content)
 
     def on_received_directory_level_update(self, received_json):
         if not validate_nearest_json(received_json):
