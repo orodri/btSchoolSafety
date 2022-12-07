@@ -1,0 +1,12 @@
+//
+//  Riley.xcconfig
+//  btSchoolSafety
+//
+//  Created by Owen Rodriguez on 12/6/22.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+SERVER_URL = http:\/\/10.0.0.48:8000
+SERVER_WS_URL = ws:\/\/10.0.0.488000
+PROXIMITY_UUID = 2F39A7A5-6AC0-22C3-A5A9-E144B487C880

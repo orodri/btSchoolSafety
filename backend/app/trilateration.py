@@ -1,12 +1,9 @@
-from easy_trilateration.model import *  
-from easy_trilateration.least_squares import easy_least_squares  
-from easy_trilateration.graph import *  
+from easy_trilateration.least_squares import easy_least_squares
 
 
 def trilateration(positions):
     circle, meta = easy_least_squares(positions)
     return circle.center.x, circle.center.y
-
 
 
 """ if __name__ == '__main__':  
@@ -19,3 +16,6 @@ def trilateration(positions):
     #print(meta)
     trilateration(arr) """
 
+
+def compute_student_positions():
+    pass
