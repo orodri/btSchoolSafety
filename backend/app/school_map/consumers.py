@@ -36,12 +36,10 @@ class StudentConsumer(WebsocketConsumer):
         if not validate_chat_json(received_json):
             return
         chat_content = received_json['chat_content']
-        anon_identifier = received_json['anonIdentifier']
         # Send to the first responders' clients
         async_to_sync(self.channel_layer.group_send)(
             'first_responders', {
                 'type': 'student_chat_update',
-                'anonIdentifier': anon_identifier,
                 'chat_content': chat_content,
             }
         )
@@ -116,4 +114,10 @@ class FirstResponderConsumer(WebsocketConsumer):
         student_positions = event['student_positions']
         self.send(text_data=json.dumps({
             'studentPositions': student_positions
+        }))
+
+    def chat_update(self, event):
+        chat_content = event['chat_content']
+        self.send(text_data=json.dumps({
+            'chat': chat_content
         }))
