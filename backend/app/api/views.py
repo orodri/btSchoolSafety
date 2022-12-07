@@ -55,9 +55,8 @@ def status(request):
 
     body = json.loads(request.body)
 
-    s = Student.objects.filter(anon_identifier=body['anonIdentifier']).first()
-    if not s:
-        s = Student()
+    s, _ = Student.objects.get_or_create(
+        anon_identifier=body['anonIdentifier'])
 
     s.user_reported_status = body['type']
     s.save()

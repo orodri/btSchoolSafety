@@ -73,6 +73,40 @@
               </q-item-section>
             </q-item>
           </q-list>
+          <q-list>
+            <q-item>
+              <q-item-section>
+                Students:
+              </q-item-section> 
+              <q-item-section side>
+                [[ totalUsers ]]
+              </q-item-section> 
+            </q-item>
+            <q-item> 
+              <q-item-section>
+              Requesting Medical Attention:
+              </q-item-section> 
+              <q-item-section side>
+              [[ medUsers ]]
+              </q-item-section>
+            </q-item>
+            <q-item> 
+              <q-item-section>
+              Safe:
+              </q-item-section> 
+              <q-item-section side>
+              [[ safeUsers ]]
+              </q-item-section>
+            </q-item>
+            <q-item> 
+              <q-item-section>
+              Seeing Shooter:
+              </q-item-section> 
+              <q-item-section side>
+              [[ dangerUsers ]]
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-drawer>
         <q-page-container>
           <q-page>
@@ -131,6 +165,10 @@
                 },
               {% endfor %}
               ],
+              totalUsers: {{ total_users}},
+              medUsers: {{ med_users }},
+              safeUsers: {{ safe_users }},
+              dangerUsers: {{ danger_users}},
           };
         },
         setup() {
@@ -157,32 +195,32 @@
               })
             }
             this.roomReportings = roomReportings;
-          },
+        },
           onReceivedStudentPositions(studentPositions) {
             updateStudentAvatarsOrCreate(scene, avatars, studentPositions);
           },
           connect() {
             console.log("Connecting...")
-            const socket = new WebSocket(
-              "ws://" + window.location.host + "/ws/first-responder"
-            );
+          const socket = new WebSocket(
+            "ws://" + window.location.host + "/ws/first-responder"
+          );
 
-            socket.onmessage = (e) => {
-              const data = JSON.parse(e.data);
+          socket.onmessage = (e) => {
+            const data = JSON.parse(e.data);
 
               if (data.roomCounts) {
                 this.onReceivedRoomCounts(data.roomCounts);
               } else if (data.studentPositions) {
                 this.onReceivedStudentPositions(data.studentPositions);
-              }
-            };
+            }
+          };
 
             socket.onclose = (e) => {
               console.error("Socket closed unexpectedly will attempt to reconnect in 5s");
               setTimeout(() => {
                 this.connect()
               }, 5000);
-            }
+          }
           },
         },
         mounted() {
