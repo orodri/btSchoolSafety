@@ -1,3 +1,16 @@
+def validate_chat_json(received_json):
+    if 'anonIdentifier' not in received_json:
+        return False
+    if 'chat_content' not in received_json:
+        return False
+    if type(received_json['chat_content']) is not str and received_json['chat_content'] is not None:
+        return False
+    if type(received_json['anonIdentifier']) is not str:
+        return False
+
+    return True
+
+
 def validate_nearest_json(received_json):
     if 'anonIdentifier' not in received_json:
         return False

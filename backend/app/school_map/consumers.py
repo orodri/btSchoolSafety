@@ -4,11 +4,15 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from school_map.directory_level_reporting import compute_students_near_rooms
 from school_map.models import Student
+
+from school_map.validators import validate_nearest_json, validate_precise_location_json, validate_chat_json
+
 from school_map.validators import validate_nearest_json, validate_precise_location_json
 from school_map.directory_level_reporting import compute_total_students
 from school_map.directory_level_reporting import compute_medical_students
 from school_map.directory_level_reporting import compute_safe_students
 from school_map.directory_level_reporting import compute_danger_students
+
 
 
 # What the iOS clients are connecting to
@@ -33,6 +37,21 @@ class StudentConsumer(WebsocketConsumer):
             self.on_received_directory_level_update(received_json)
         elif 'beacons' in received_json:
             self.on_received_precise_location_update(received_json)
+        elif 'chat_content' in received_json:
+            self.on_received_chat_update(received_json)
+
+    def on_received_chat_update(self, received_json):
+        if not validate_chat_json(received_json):
+            return
+        chat_content = received_json['chat_content']
+        # Send to the first responders' clients
+        async_to_sync(self.channel_layer.group_send)(
+            'first_responders', {
+                'type': 'chat_update',
+                'chat_content': chat_content,
+            }
+        )
+        print("chat received by IOS socket")
 
     def on_received_directory_level_update(self, received_json):
         if not validate_nearest_json(received_json):
@@ -120,4 +139,10 @@ class FirstResponderConsumer(WebsocketConsumer):
         student_positions = event['student_positions']
         self.send(text_data=json.dumps({
             'studentPositions': student_positions
+        }))
+
+    def chat_update(self, event):
+        chat_content = event['chat_content']
+        self.send(text_data=json.dumps({
+            'chat': chat_content
         }))
