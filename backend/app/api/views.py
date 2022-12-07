@@ -1,7 +1,9 @@
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.views.decorators.csrf import csrf_exempt
 import json
 from system.models import System
+from school_map.models import Student
 
 
 @require_http_methods(["POST"])
@@ -45,3 +47,21 @@ def deactivate(request):
     # send push notification to apple's push notification service
 
     return HttpResponse(status=200)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def status(request):
+
+    body = json.loads(request.body)
+
+    s, _ = Student.objects.get_or_create(
+        anon_identifier=body['anonIdentifier'])
+
+    s.user_reported_status = body['type']
+    s.save()
+
+    response = HttpResponse()
+    response.status_code = 201
+
+    return response

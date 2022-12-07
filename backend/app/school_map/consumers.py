@@ -4,7 +4,15 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from school_map.directory_level_reporting import compute_students_near_rooms
 from school_map.models import Student
+
 from school_map.validators import validate_nearest_json, validate_precise_location_json, validate_chat_json
+
+from school_map.validators import validate_nearest_json, validate_precise_location_json
+from school_map.directory_level_reporting import compute_total_students
+from school_map.directory_level_reporting import compute_medical_students
+from school_map.directory_level_reporting import compute_safe_students
+from school_map.directory_level_reporting import compute_danger_students
+
 
 
 # What the iOS clients are connecting to
@@ -59,12 +67,20 @@ class StudentConsumer(WebsocketConsumer):
         student.save()
 
         room_counts = compute_students_near_rooms()
+        total_users = compute_total_students()
+        med_users = compute_medical_students()
+        safe_users = compute_safe_students()
+        danger_users = compute_danger_students()
 
         # Send to the first responders' clients
         async_to_sync(self.channel_layer.group_send)(
             'first_responders', {
                 'type': 'directory_level_update',
                 'room_counts': room_counts,
+                'total_users': total_users,
+                'med_users': med_users,
+                'safe_users': safe_users,
+                'danger_users': danger_users,
             }
         )
 
@@ -106,8 +122,17 @@ class FirstResponderConsumer(WebsocketConsumer):
     # Send to the first responders' clients
     def directory_level_update(self, event):
         room_counts = event['room_counts']
+        total_users = event['total_users']
+        med_users = event[' med_users']
+        safe_users = event['safe_users']
+        danger_users = event['danger_users']
+
         self.send(text_data=json.dumps({
-            'roomCounts': room_counts
+            'roomCounts': room_counts,
+            'totalUsers': total_users,
+            'medUsers': med_users,
+            'safeUsers': safe_users,
+            'dangerUsers': danger_users,
         }))
 
     def precise_location_update(self, event):
