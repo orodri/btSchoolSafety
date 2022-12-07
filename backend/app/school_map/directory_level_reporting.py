@@ -18,7 +18,8 @@ def compute_students_near_rooms():
     students = Student.objects.all()
     for s in students:
         if s.beacon_minor_closest_to:
-            room_counts[to_room[s.beacon_minor_closest_to]] += 1
+            if s.beacon_minor_closest_to in to_room:
+                room_counts[to_room[s.beacon_minor_closest_to]] += 1
 
     return room_counts
 
