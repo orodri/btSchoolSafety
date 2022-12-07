@@ -11,6 +11,10 @@ import SwiftUI
 struct MessageView: View {
     @Binding var isPresented: Bool
     @State private var text: String = ""
+//    @State private var chat_history = ChatHistory.shared.chat_history;
+    @ObservedObject private var chatObject = ChatHistory()
+    
+    
     var body: some View {
         VStack {
             HStack{
@@ -28,7 +32,14 @@ struct MessageView: View {
 //                        Text("Hi ")
 //                    }
 //                }
-                List(){}
+                
+                List(){
+//                    let chat_h = chatObject.chat_history
+                    ForEach(ChatHistory.shared.get_chat_history(), id: \.self) { chat in
+                        
+                        Text(chat.text)
+                    }
+                }
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTitle("Officer")
             }
@@ -39,6 +50,7 @@ struct MessageView: View {
                 text: $text
             ).onSubmit {
                 print(text)
+                ChatHistory.shared.add_chat(user: "You", text: text)
                 LocationTrackingService.shared.beginSendChat(text: text)
                 self.text = ""
             }
