@@ -4,7 +4,7 @@ from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from school_map.directory_level_reporting import compute_students_near_rooms
 from school_map.models import Student
-from school_map.validators import validate_nearest_json, validate_precise_location_json
+from school_map.validators import validate_nearest_json, validate_precise_location_json, validate_chat_json
 
 
 # What the iOS clients are connecting to
@@ -29,6 +29,22 @@ class StudentConsumer(WebsocketConsumer):
             self.on_received_directory_level_update(received_json)
         elif 'beacons' in received_json:
             self.on_received_precise_location_update(received_json)
+        elif 'chat' in received_json:
+            self.on_received_chat_update(received_json)
+
+    def on_received_chat_update(self, received_json):
+        if not validate_chat_json(received_json):
+            return
+        chat_content = received_json['chat']
+        anon_identifier = received_json['anonIdentifier']
+        # Send to the first responders' clients
+        async_to_sync(self.channel_layer.group_send)(
+            'first_responders', {
+                'type': 'student_chat_update',
+                'anonIdentifier': anon_identifier,
+                'chat_content': chat_content,
+            }
+        )
 
     def on_received_directory_level_update(self, received_json):
         if not validate_nearest_json(received_json):
