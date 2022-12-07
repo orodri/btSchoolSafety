@@ -68,11 +68,13 @@
             <q-item-section> Seeing Shooter: </q-item-section>
             <q-item-section side> [[ dangerUsers ]] </q-item-section>
           </q-item>
+          
+          <q-item v-for="chat in chatHistory" style="background-color: darkgray;">
+            <q-item-section v-if="chatHistory.length !== 0" style="color: white;"> From Student: </q-item-section>
+            <q-item-section style="right: 0px; text-align:right; color:white"> [[ chat ]] </q-item-section>
+          </q-item>
         </q-list>
-        <q-list v-for="chat in chatHistory">
-          <q-item-section> Student: </q-item-section>
-          <q-item-section side> [[ chat ]] </q-item-section>
-        </q-list>
+        
       </q-drawer>
       <q-page-container>
         <q-page>
@@ -117,22 +119,21 @@
       data() {
         return {
           drawerLeft: true,
-          emergencyType: {{ emergency_type | quote }
-      },
+          emergencyType: {{ emergency_type | quote }},
       buildingName: {{ building_name| quote}},
     roomReportings: [
       {% for room_name, room_count in room_counts.items %}
     {
-      roomName: { { room_name | quote } },
-      numStudentsNearby: { { room_count } }
+      roomName: {{ room_name | quote }},
+      numStudentsNearby: {{ room_count }}
     },
     {% endfor %}
               ],
-    totalUsers: { { total_users } },
-    medUsers: { { med_users } },
-    safeUsers: { { safe_users } },
-    dangerUsers: { { danger_users } },
-    chatHistory: { { chat_content } },
+    totalUsers: {{ total_users }},
+    medUsers: {{ med_users }},
+    safeUsers: {{ safe_users }},
+    dangerUsers: {{ danger_users }},
+    chatHistory: [],
 
           };
         },
@@ -148,8 +149,7 @@
       },
       resetCamera() {
         controls.reset();
-        camera.position.y = {{ default_camera_height }
-      };
+        camera.position.y = {{ default_camera_height }};
       camera.lookAt(new THREE.Vector3(0, 0, 0));
     },
     onReceivedRoomCounts(roomCounts) {
@@ -204,7 +204,7 @@
     mounted() {
       this.connect();
     }
-      });
+    });
 
     app.use(Quasar);
     app.mount("#q-app");
