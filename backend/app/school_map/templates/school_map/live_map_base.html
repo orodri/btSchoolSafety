@@ -2,128 +2,98 @@
 <!DOCTYPE html>
 <html lang="en-US">
 
-  <head>
-    <title>btSchoolSafety</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/quasar@2.10.1/dist/quasar.prod.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-  </head>
-  <body>
-    <div id="q-app">
-      <q-layout view="hHh Lpr fFf">
-        <q-header elevated class="bg-primary text-white">
-          <q-toolbar class="q-gutter-sm">
-            <q-btn
-              flat
-              @click="drawerLeft = !drawerLeft"
-              round
-              dense
-              icon="menu"
-            ></q-btn>
-            <q-toolbar-title>
-              btSchoolSafety
-              <q-chip
-                v-if="!!emergencyType"
-                color="{{ emergency_type|to_color }}"
-                text-color="white"
-              >
-                {{ emergency_type|to_label }}
-              </q-chip>
-            </q-toolbar-title>
-            <q-btn flat @click="redirectToDeactivate">Deactivate</q-btn>
-            <q-btn flat round dense icon="more_vert">
-              <q-menu>
-                <q-list>
-                  <q-item clickable v-close-popup @click="redirectToLogout">
-                    <q-item-section class="text-no-wrap">
-                      Log out
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </q-toolbar>
-        </q-header>
-        <q-drawer
-          v-model="drawerLeft"
-          show-if-above
-          :width="375"
-          :breakpoint="500"
-          bordered
-          overlay
-        >
-          <q-list bordered separator>
-            <q-item>
-              <q-item-section>
-                <div class="text-h6">[[ buildingName ]]</div>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-for="(reporting, index) in roomReportings">
-              <q-item-section overline>
-                [[ reporting.roomName]]
-              </q-item-section>
-              <q-item-section side>
-                [[ reporting.numStudentsNearby ]] students nearby
-              </q-item-section>
-            </q-item>
-          </q-list>
-          <q-list>
-            <q-item>
-              <q-item-section> Students: </q-item-section>
-              <q-item-section side> [[ totalUsers ]] </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section> Requesting Medical Attention: </q-item-section>
-              <q-item-section side> [[ medUsers ]] </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section> Safe: </q-item-section>
-              <q-item-section side> [[ safeUsers ]] </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section> Seeing Shooter: </q-item-section>
-              <q-item-section side> [[ dangerUsers ]] </q-item-section>
-            </q-item>
-          </q-list>
-          <q-list v-for="chat in chatHistory">
-            <q-item-section>
-              Student:
-            </q-item-section> 
-            <q-item-section>
-              [[ chat ]]
-            </q-item-section>
-          </q-list>
-        </q-drawer>
-        <q-page-container>
-          <q-page>
-            <div v-if="!!buildingName" id="btss-three-js-container"></div>
-            <div
-              v-else
-              class="window-height window-width row justify-center items-center"
-            >
-              <div class="text-h1">Missing map</div>
-              <div>
-                Please add one at:
-                <a href="admin/school_map/buildingmap/">admin portal</a>
-              </div>
+<head>
+  <title>btSchoolSafety</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"
+    type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/quasar@2.10.1/dist/quasar.prod.css" rel="stylesheet" type="text/css" />
+</head>
 
+<body>
+  <div id="q-app">
+    <q-layout view="hHh Lpr fFf">
+      <q-header elevated class="bg-primary text-white">
+        <q-toolbar class="q-gutter-sm">
+          <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu"></q-btn>
+          <q-toolbar-title>
+            btSchoolSafety
+            <q-chip v-if="!!emergencyType" color="{{ emergency_type|to_color }}" text-color="white">
+              {{ emergency_type|to_label }}
+            </q-chip>
+          </q-toolbar-title>
+          <q-btn flat @click="redirectToDeactivate">Deactivate</q-btn>
+          <q-btn flat round dense icon="more_vert">
+            <q-menu>
+              <q-list>
+                <q-item clickable v-close-popup @click="redirectToLogout">
+                  <q-item-section class="text-no-wrap">
+                    Log out
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </q-toolbar>
+      </q-header>
+      <q-drawer v-model="drawerLeft" show-if-above :width="375" :breakpoint="500" bordered overlay>
+        <q-list bordered separator>
+          <q-item>
+            <q-item-section>
+              <div class="text-h6">[[ buildingName ]]</div>
+            </q-item-section>
+          </q-item>
+          <q-item clickable v-for="(reporting, index) in roomReportings">
+            <q-item-section overline>
+              [[ reporting.roomName]]
+            </q-item-section>
+            <q-item-section side>
+              [[ reporting.numStudentsNearby ]] students nearby
+            </q-item-section>
+          </q-item>
+        </q-list>
+        <q-list>
+          <q-item>
+            <q-item-section> Students: </q-item-section>
+            <q-item-section side> [[ totalUsers ]] </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section> Requesting Medical Attention: </q-item-section>
+            <q-item-section side> [[ medUsers ]] </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section> Safe: </q-item-section>
+            <q-item-section side> [[ safeUsers ]] </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section> Seeing Shooter: </q-item-section>
+            <q-item-section side> [[ dangerUsers ]] </q-item-section>
+          </q-item>
+        </q-list>
+        <q-list v-for="chat in chatHistory">
+          <q-item-section> Student: </q-item-section>
+          <q-item-section side> [[ chat ]] </q-item-section>
+        </q-list>
+      </q-drawer>
+      <q-page-container>
+        <q-page>
+          <div v-if="!!buildingName" id="btss-three-js-container"></div>
+          <div v-else class="window-height window-width row justify-center items-center">
+            <div class="text-h1">Missing map</div>
+            <div>
+              Please add one at:
+              <a href="admin/school_map/buildingmap/">admin portal</a>
             </div>
+
           </div>
-          <q-page-sticky position="bottom-right" :offset="[18, 18]">
-            <q-btn fab color="accent" @click="resetCamera">
-              Reset camera
-            </q-btn>
-          </q-page-sticky>
-        </q-page>
-      </q-page-container>
-    </q-layout>
+  </div>
+  <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-btn fab color="accent" @click="resetCamera">
+      Reset camera
+    </q-btn>
+  </q-page-sticky>
+  </q-page>
+  </q-page-container>
+  </q-layout>
   </div>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script> -->
@@ -147,21 +117,22 @@
       data() {
         return {
           drawerLeft: true,
-          emergencyType: {{ emergency_type | quote }},
-        buildingName: {{ building_name| quote }},
+          emergencyType: {{ emergency_type | quote }
+      },
+      buildingName: {{ building_name| quote}},
     roomReportings: [
       {% for room_name, room_count in room_counts.items %}
     {
-      roomName: {{ room_name | quote }},
-      numStudentsNearby: {{ room_count }}
+      roomName: { { room_name | quote } },
+      numStudentsNearby: { { room_count } }
     },
     {% endfor %}
               ],
-    totalUsers: {{ total_users }},
-    medUsers: {{ med_users }},
-    safeUsers: {{ safe_users }},
-    dangerUsers: {{ danger_users }},
-    chatHistory: [],
+    totalUsers: { { total_users } },
+    medUsers: { { med_users } },
+    safeUsers: { { safe_users } },
+    dangerUsers: { { danger_users } },
+    chatHistory: { { chat_content } },
 
           };
         },
@@ -177,7 +148,8 @@
       },
       resetCamera() {
         controls.reset();
-        camera.position.y = {{ default_camera_height }};
+        camera.position.y = {{ default_camera_height }
+      };
       camera.lookAt(new THREE.Vector3(0, 0, 0));
     },
     onReceivedRoomCounts(roomCounts) {
@@ -273,7 +245,7 @@
     let schoolMap;
 
     loader.load(
-      {{ map_file_path| quote }},
+      {{ map_file_path| quote}},
       (gltf) => {
         schoolMap = gltf.scene.children[0];
         schoolMap.material = new THREE.MeshBasicMaterial({
@@ -321,13 +293,11 @@
         }
 
 
-          if (!!position) {
-            avatar.position.x = position.x;
-            avatar.position.z = -position.y; // three.js uses a y-up coordinate system
-          }
-          avatar.visible = !!position;
-
+        if (!!position) {
+          avatar.position.x = position.x;
+          avatar.position.z = -position.y; // three.js uses a y-up coordinate system
         }
+        avatar.visible = !!position;
       }
     }
   </script>
