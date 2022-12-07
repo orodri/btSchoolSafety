@@ -104,7 +104,7 @@ class FirstResponderConsumer(WebsocketConsumer):
     def directory_level_update(self, event):
         room_counts = event['room_counts']
         total_users = event['total_users']
-        med_users = event[' med_users']
+        med_users = event['med_users']
         safe_users = event['safe_users']
         danger_users = event['danger_users']
 
