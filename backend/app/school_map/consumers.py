@@ -29,7 +29,7 @@ class StudentConsumer(WebsocketConsumer):
             self.on_received_directory_level_update(received_json)
         elif 'beacons' in received_json:
             self.on_received_precise_location_update(received_json)
-        elif 'chat' in received_json:
+        elif 'chat_content' in received_json:
             self.on_received_chat_update(received_json)
 
     def on_received_chat_update(self, received_json):
@@ -45,6 +45,7 @@ class StudentConsumer(WebsocketConsumer):
                 'chat_content': chat_content,
             }
         )
+        print("chat received by IOS socket")
 
     def on_received_directory_level_update(self, received_json):
         if not validate_nearest_json(received_json):
