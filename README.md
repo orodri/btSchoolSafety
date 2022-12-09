@@ -8,6 +8,6 @@
 ![Elevator Pitch](https://user-images.githubusercontent.com/97196368/206761958-69c13625-d6ef-4648-b433-936737349a0c.png) 
 ![Team](/team.png)
 
-[video_page]: https://www.youtube.com/watch?v=EpFiQBT9fck
+[video_page]: https://youtu.be/EgQJ5-zyxjE
 [wiki_page]: https://github.com/orodri/btSchoolSafety/wiki
 [agile_page]: https://trello.com/b/fUOpmdsM/btschoolsafety
